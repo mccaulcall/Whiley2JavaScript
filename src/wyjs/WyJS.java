@@ -1,8 +1,11 @@
 package wyjs;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.swing.JFileChooser;
 
 import wyil.io.WyilFilePrinter;
 import wyil.io.WyilFileReader;
@@ -10,7 +13,13 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 
+
+
 public class WyJS {
+	
+//	static String[] testFiles = {"basic","basicplus","assert"};
+//	static int testFile = 2;
+	
 	public static void main(String[] args) {
 		try {
 //			First, read the WyIL file specified on the command-line
@@ -23,11 +32,12 @@ public class WyJS {
 				}
 			}
 		} catch (ArrayIndexOutOfBoundsException a) {
-//			For testing, catches no input (for when run in ide) and finds local file
+//			catches no input (for when run in ide) and finds local file
 			try {
 //				First, make sure you've got a file
-				InputStream is = new FileInputStream("testing/basic.wyil");
-//				Second, read the WyIL file specified on the command-line
+//				InputStream is = new FileInputStream("testing/dotWyilArchive/" + testFiles[testFile] + ".wyil");
+				InputStream is = new FileInputStream(promptForFile());
+//				Second, read the WyIL file from the file input stream
 				WyilFileReader r = new WyilFileReader(is);
 				WyilFile wyilFile = r.read();
 //				Third, print out its contents (for now, though this should be changed)
@@ -41,7 +51,7 @@ public class WyJS {
 					}
 				}
 			} catch (Exception e) {
-				System.out.println("ArrayIndexOutOfBoundsException, need an input");
+				System.out.println("ArrayIndexOutOfBoundsException");
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -75,8 +85,8 @@ public class WyJS {
 			translate((Codes.BinaryOperator) bytecode);
 		} else if (bytecode instanceof Codes.Assign) {
 			translate((Codes.Assign) bytecode);
-//		} else if (bytecode instanceof Codes.Assert) {
-			// ...
+		} else if (bytecode instanceof Codes.Assert) {
+			translate((Codes.Assert) bytecode); 
 		} else {
 			dummyline();
 		}
@@ -106,8 +116,24 @@ public class WyJS {
 	public static void translate(Codes.Assign bytecode) {
 		System.out.println("	r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
 	}
+	
+	public static void translate(Codes.Assert bytecode) {
+		System.out.println("	assert statement here");
+	}
 
 	public static void dummyline() {
 		System.out.println("Something is here");
 	}
+	
+	private static String promptForFile() { // taken from an open source project
+		  JFileChooser fc=new JFileChooser();
+		  fc.setCurrentDirectory(new File("."));
+		  int returnVal=fc.showOpenDialog(fc);
+		  if (returnVal == JFileChooser.APPROVE_OPTION) {
+		    return fc.getSelectedFile().getAbsolutePath();
+		  }
+		 else {
+		    return null;
+		  }
+		}
 }
