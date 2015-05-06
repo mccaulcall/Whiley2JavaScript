@@ -13,12 +13,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 
-
-
 public class WyJS {
-	
-//	static String[] testFiles = {"basic","basicplus","assert"};
-//	static int testFile = 2;
 	
 	public static void main(String[] args) {
 		try {
@@ -33,10 +28,12 @@ public class WyJS {
 			}
 		} catch (ArrayIndexOutOfBoundsException a) {
 //			catches no input (for when run in ide) and finds local file
+			String[] testFiles = {"basic","basicplus","assert"};
+			for (int i = 0 ; i < testFiles.length ; i++) {
 			try {
 //				First, make sure you've got a file
-//				InputStream is = new FileInputStream("testing/dotWyilArchive/" + testFiles[testFile] + ".wyil");
-				InputStream is = new FileInputStream(promptForFile());
+				InputStream is = new FileInputStream("testing/dotWyilArchive/" + testFiles[i] + ".wyil");
+//				InputStream is = new FileInputStream(promptForFile());
 //				Second, read the WyIL file from the file input stream
 				WyilFileReader r = new WyilFileReader(is);
 				WyilFile wyilFile = r.read();
@@ -53,6 +50,7 @@ public class WyJS {
 			} catch (Exception e) {
 				System.out.println("ArrayIndexOutOfBoundsException");
 			}
+			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -64,6 +62,8 @@ public class WyJS {
 			translate(bytecode);
 		}
 		System.out.println("}");
+		System.out.println();
+		System.out.println();
 	}
 
 	public static String paramsString(WyilFile.FunctionOrMethod m) {
@@ -96,7 +96,7 @@ public class WyJS {
 		if(bytecode.operand != Codes.NULL_REG) {
 			System.out.println("	return r" + bytecode.operand + ";");
 		} else {
-//			System.out.println("	return" + ";");
+			System.out.println("	return" + ";");
 		}
 	}
 
@@ -122,7 +122,7 @@ public class WyJS {
 	}
 
 	public static void dummyline() {
-		System.out.println("Something is here");
+		System.out.println(" -- something is here -- ");
 	}
 	
 	private static String promptForFile() { // taken from an open source project
