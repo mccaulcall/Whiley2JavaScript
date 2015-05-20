@@ -1,11 +1,10 @@
 package wyjs;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.swing.JFileChooser;
+import java.io.PrintWriter;
 
 import wyil.io.WyilFilePrinter;
 import wyil.io.WyilFileReader;
@@ -15,6 +14,8 @@ import wyil.lang.WyilFile;
 
 public class WyJS {
 	
+	static PrintWriter out;
+	
 	public static void main(String[] args) {
 		try {
 //			First, read the WyIL file specified on the command-line
@@ -23,7 +24,7 @@ public class WyJS {
 //			Second, try to interpret into js
 			for (WyilFile.Block b : wyilFile.blocks()) {
 				if (b instanceof WyilFile.FunctionOrMethod) {
-					translate((WyilFile.FunctionOrMethod)b);
+					translate((WyilFile.FunctionOrMethod)b,args[0]);
 				}
 			}
 		} catch (ArrayIndexOutOfBoundsException a) {
@@ -44,7 +45,7 @@ public class WyJS {
 //				Fourth, try to interpret into js
 				for (WyilFile.Block b : wyilFile.blocks()) {
 					if (b instanceof WyilFile.FunctionOrMethod) {
-						translate((WyilFile.FunctionOrMethod)b);
+						translate((WyilFile.FunctionOrMethod)b,testFiles[i]);
 					}
 				}
 			} catch (Exception e) {
@@ -56,12 +57,17 @@ public class WyJS {
 		}
 	}
 
-	public static void translate(WyilFile.FunctionOrMethod m) {
+	public static void translate(WyilFile.FunctionOrMethod m, String fileName) {
+		try { out = new PrintWriter("testing/dotJsOutput/"+fileName+".js"); }
+		catch (FileNotFoundException e) { e.printStackTrace(); }
 		System.out.println("function " + m.name() + "(" + paramsString(m) + ") {");
+		out.println("function " + m.name() + "(" + paramsString(m) + ") {");
 		for (Code bytecode : m.body()) {
 			translate(bytecode);
 		}
 		System.out.println("}");
+		out.println("}");
+		out.close();
 		System.out.println();
 		System.out.println();
 	}
@@ -70,8 +76,8 @@ public class WyJS {
 //		System.out.println("NUMBER OF PARAMETERS: " + m.type().params().size());
 		String params = "";
 		if (m.type().params().size() > 0) {
-			params += "var r0";
-			for (int i = 1; i < m.type().params().size(); i++) params += ", var r" + i;
+			params += "r0";
+			for (int i = 1; i < m.type().params().size(); i++) params += ", r" + i;
 		}
 		return params;
 	}
@@ -94,46 +100,40 @@ public class WyJS {
 
 	public static void translate(Codes.Return bytecode) {
 		if(bytecode.operand != Codes.NULL_REG) {
-			System.out.println("	return r" + bytecode.operand + ";");
+			System.out.println(" return r" + bytecode.operand + ";");
+			out.println(" return r" + bytecode.operand + ";");
 		} else {
-			System.out.println("	return" + ";");
+			System.out.println(" return" + ";");
+			out.println(" return" + ";");
 		}
 	}
 
 	public static void translate(Codes.Const bytecode) {
-		System.out.println("	var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
+		System.out.println(" var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
+		out.println(" var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
 	}
 
 	public static void translate(Codes.BinaryOperator bytecode) {
-		String output = "	var r" + bytecode.target() + " = r" + bytecode.operand(0);
+		String output = " var r" + bytecode.target() + " = r" + bytecode.operand(0);
 		if (bytecode.kind.toString().equals("add")) output += " + ";
 		else if (bytecode.kind.toString().equals("sub")) output += " - ";
 		else if (bytecode.kind.toString().equals("mul")) output += " * ";
 		else if (bytecode.kind.toString().equals("div")) output += " / ";
+		else { System.out.println(bytecode.kind.toString()); return;}
 		System.out.println(output + "r" + bytecode.operand(1) + ";");
+		out.println(output + "r" + bytecode.operand(1) + ";");
 	}
 
 	public static void translate(Codes.Assign bytecode) {
-		System.out.println("	r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
+		System.out.println(" r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
+		out.println(" r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
 	}
 	
 	public static void translate(Codes.Assert bytecode) {
-		System.out.println("	assert statement here");
+		System.out.println(" -- assert statement here -- ");
 	}
 
 	public static void dummyline() {
 		System.out.println(" -- something is here -- ");
 	}
-	
-	private static String promptForFile() { // taken from an open source project
-		  JFileChooser fc=new JFileChooser();
-		  fc.setCurrentDirectory(new File("."));
-		  int returnVal=fc.showOpenDialog(fc);
-		  if (returnVal == JFileChooser.APPROVE_OPTION) {
-		    return fc.getSelectedFile().getAbsolutePath();
-		  }
-		 else {
-		    return null;
-		  }
-		}
 }
