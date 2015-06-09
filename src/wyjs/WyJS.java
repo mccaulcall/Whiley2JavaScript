@@ -1,10 +1,15 @@
 package wyjs;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import org.apache.commons.io.FilenameUtils;
+import org.junit.Test;
 
 import wyil.io.WyilFilePrinter;
 import wyil.io.WyilFileReader;
@@ -14,46 +19,60 @@ import wyil.lang.WyilFile;
 
 public class WyJS {
 	
+	private static boolean testMode = true;
+	private static boolean generateTests = false;
+	private static String testSelectedFiles = "";
+	
 	static PrintWriter out;
+	private static FilenameUtils FileUtils = new FilenameUtils();
 	
 	public static void main(String[] args) {
-		try {
-//			First, read the WyIL file specified on the command-line
-			WyilFileReader r = new WyilFileReader(args[0]);
-			WyilFile wyilFile = r.read();
-//			Second, try to interpret into js
-			for (WyilFile.Block b : wyilFile.blocks()) {
-				if (b instanceof WyilFile.FunctionOrMethod) {
-					translate((WyilFile.FunctionOrMethod)b,args[0]);
+		if (testMode) {
+			File[] wyils = new File("testing/validWyil").listFiles();
+//			System.out.println("Number of files found: " + wyils.length);
+			ArrayList<String> wyilNames = new ArrayList<String>();
+			if (testSelectedFiles.equals("")) { for(File wyil : wyils) { if (wyil.isFile()) { wyilNames.add(FileUtils.removeExtension(wyil.getName())); } } }
+			else { wyilNames.add(testSelectedFiles); }
+//			for(String wyilName : wyilNames) System.out.println(wyilName);
+			for (String fileName : wyilNames) {
+				System.out.println("FileName: " + fileName); System.out.println();
+				if (generateTests) {
+					System.out.println("");
+					System.out.println("@Test");
+					System.out.println("public void " + fileName + "() { runTest(\"" + fileName + "\"); }");
+				} else {
+					try {
+//						First, make sure you've got a file
+						InputStream is = new FileInputStream("testing/validWyil/" + fileName + ".wyil");
+//						Second, read the WyIL file from the file input stream
+						WyilFileReader r = new WyilFileReader(is);
+						WyilFile wyilFile = r.read();
+//						Third, print out its contents (for now, though this should be changed)
+//						WyilFilePrinter printer = new WyilFilePrinter(System.out);
+//						printer.apply(wyilFile);
+//						System.out.flush();
+//						Fourth, try to interpret into js
+						for (WyilFile.Block b : wyilFile.blocks()) {
+							if (b instanceof WyilFile.FunctionOrMethod) {
+								translate((WyilFile.FunctionOrMethod)b,fileName);
+							}
+						}
+					} catch (IOException e) { System.out.println(e.getMessage()); }
 				}
 			}
-		} catch (ArrayIndexOutOfBoundsException a) {
-//			catches no input (for when run in ide) and finds local file
-			String[] testFiles = {"basic","basicplus","assert"};
-			for (int i = 0 ; i < testFiles.length ; i++) {
+			
+		} else {
 			try {
-//				First, make sure you've got a file
-				InputStream is = new FileInputStream("testing/dotWyilArchive/" + testFiles[i] + ".wyil");
-//				InputStream is = new FileInputStream(promptForFile());
-//				Second, read the WyIL file from the file input stream
-				WyilFileReader r = new WyilFileReader(is);
+//				First, read the WyIL file specified on the command-line
+				WyilFileReader r = new WyilFileReader(args[0]);
 				WyilFile wyilFile = r.read();
-//				Third, print out its contents (for now, though this should be changed)
-				WyilFilePrinter printer = new WyilFilePrinter(System.out);
-				printer.apply(wyilFile);
-				System.out.flush();
-//				Fourth, try to interpret into js
+//				Second, try to interpret into js
 				for (WyilFile.Block b : wyilFile.blocks()) {
 					if (b instanceof WyilFile.FunctionOrMethod) {
-						translate((WyilFile.FunctionOrMethod)b,testFiles[i]);
+						translate((WyilFile.FunctionOrMethod)b,FileUtils.removeExtension(args[0]));
 					}
 				}
-			} catch (Exception e) {
-				System.out.println("ArrayIndexOutOfBoundsException");
-			}
-			}
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			} catch (IOException e) { System.out.println(e.getMessage()); }
 		}
 	}
 
@@ -131,9 +150,11 @@ public class WyJS {
 	
 	public static void translate(Codes.Assert bytecode) {
 		System.out.println(" -- assert statement here -- ");
+		out.println(" -- assert statement here -- ");
 	}
 
 	public static void dummyline() {
 		System.out.println(" -- something is here -- ");
+		out.println(" -- something is here -- ");
 	}
 }
