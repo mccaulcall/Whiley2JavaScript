@@ -18,14 +18,14 @@ import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 
 public class WyJS {
-	
+
 	private static boolean testMode = true;
 	private static boolean generateTests = false;
-	private static String testSelectedFiles = "";
-	
-	static PrintWriter out;
+	private static String testSelectedFiles = "Assert";
+
+	static PrintWriter fileWriter;
 	private static FilenameUtils FileUtils = new FilenameUtils();
-	
+
 	public static void main(String[] args) {
 		if (testMode) {
 			File[] wyils = new File("testing/validWyil").listFiles();
@@ -47,10 +47,12 @@ public class WyJS {
 //						Second, read the WyIL file from the file input stream
 						WyilFileReader r = new WyilFileReader(is);
 						WyilFile wyilFile = r.read();
-//						Third, print out its contents (for now, though this should be changed)
-//						WyilFilePrinter printer = new WyilFilePrinter(System.out);
-//						printer.apply(wyilFile);
-//						System.out.flush();
+//						Third, print out its full contents (if selected files only)
+						if (!testSelectedFiles.equals("")) {
+							WyilFilePrinter printer = new WyilFilePrinter(System.out);
+							printer.apply(wyilFile);
+							System.out.flush();
+						}
 //						Fourth, try to interpret into js
 						for (WyilFile.Block b : wyilFile.blocks()) {
 							if (b instanceof WyilFile.FunctionOrMethod) {
@@ -60,7 +62,7 @@ public class WyJS {
 					} catch (IOException e) { System.out.println(e.getMessage()); }
 				}
 			}
-			
+
 		} else {
 			try {
 //				First, read the WyIL file specified on the command-line
@@ -77,16 +79,14 @@ public class WyJS {
 	}
 
 	public static void translate(WyilFile.FunctionOrMethod m, String fileName) {
-		try { out = new PrintWriter("testing/dotJsOutput/"+fileName+".js"); }
+		try { fileWriter = new PrintWriter("testing/dotJsOutput/"+fileName+".js"); }
 		catch (FileNotFoundException e) { e.printStackTrace(); }
-		System.out.println("function " + m.name() + "(" + paramsString(m) + ") {");
-		out.println("function " + m.name() + "(" + paramsString(m) + ") {");
+		output("function " + m.name() + "(" + paramsString(m) + ") {");
 		for (Code bytecode : m.body()) {
 			translate(bytecode);
 		}
-		System.out.println("}");
-		out.println("}");
-		out.close();
+		output("}");
+		fileWriter.close();
 		System.out.println();
 		System.out.println();
 	}
@@ -111,7 +111,7 @@ public class WyJS {
 		} else if (bytecode instanceof Codes.Assign) {
 			translate((Codes.Assign) bytecode);
 		} else if (bytecode instanceof Codes.Assert) {
-			translate((Codes.Assert) bytecode); 
+			translate((Codes.Assert) bytecode);
 		} else {
 			dummyline();
 		}
@@ -119,17 +119,14 @@ public class WyJS {
 
 	public static void translate(Codes.Return bytecode) {
 		if(bytecode.operand != Codes.NULL_REG) {
-			System.out.println(" return r" + bytecode.operand + ";");
-			out.println(" return r" + bytecode.operand + ";");
+			output(" return r" + bytecode.operand + ";");
 		} else {
-			System.out.println(" return" + ";");
-			out.println(" return" + ";");
+			output(" return" + ";");
 		}
 	}
 
 	public static void translate(Codes.Const bytecode) {
-		System.out.println(" var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
-		out.println(" var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
+		output(" var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
 	}
 
 	public static void translate(Codes.BinaryOperator bytecode) {
@@ -139,22 +136,23 @@ public class WyJS {
 		else if (bytecode.kind.toString().equals("mul")) output += " * ";
 		else if (bytecode.kind.toString().equals("div")) output += " / ";
 		else { System.out.println(bytecode.kind.toString()); return;}
-		System.out.println(output + "r" + bytecode.operand(1) + ";");
-		out.println(output + "r" + bytecode.operand(1) + ";");
+		output(output + "r" + bytecode.operand(1) + ";");
 	}
 
 	public static void translate(Codes.Assign bytecode) {
-		System.out.println(" r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
-		out.println(" r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
+		output(" r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
 	}
-	
+
 	public static void translate(Codes.Assert bytecode) {
-		System.out.println(" -- assert statement here -- ");
-		out.println(" -- assert statement here -- ");
+		output(" -- assert statement here -- ");
 	}
 
 	public static void dummyline() {
-		System.out.println(" -- something is here -- ");
-		out.println(" -- something is here -- ");
+		output(" -- something is here -- ");
+	}
+
+	public static void output(String toprint) {
+		System.out.println(toprint);
+		fileWriter.println(toprint);
 	}
 }
