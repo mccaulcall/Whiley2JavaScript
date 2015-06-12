@@ -1,17 +1,17 @@
 function test() {
  var r2 = 1;
  var r3 = null;
- -- something is here -- 
+//newrecord %4 = (%2, %3) : {int data,null next}
  r1 = r4;
  r0 = r1;
  var r5 = 2;
- -- something is here -- 
+//newrecord %6 = (%5, %0) : {int data,{int data,null next} next}
  r0 = r6;
  var r7 = 3;
- -- something is here -- 
+//newrecord %8 = (%7, %0) : {int data,{int data,{int data,null next} next} next}
  r0 = r8;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//assume 
+//assume 
+//assume 
  return;
 }

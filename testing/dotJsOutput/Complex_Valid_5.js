@@ -1,11 +1,11 @@
 function test() {
- -- something is here -- 
+//invoke %2 = () Complex_Valid_5:EmptyBoard : function() -> Complex_Valid_5:EmptyBoard
  r1 = r2;
  r0 = r1;
  var r4 = 1;
  var r5 = 0;
- -- something is here -- 
+//invoke %3 = (%0, %4, %5) Complex_Valid_5:play : function(Complex_Valid_5:Board,Complex_Valid_5:Piece,Complex_Valid_5:nat) -> Complex_Valid_5:Board
  r0 = r3;
- -- something is here -- 
+//assume 
  return;
 }

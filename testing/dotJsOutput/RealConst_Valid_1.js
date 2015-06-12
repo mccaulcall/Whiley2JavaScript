@@ -5,6 +5,6 @@ function test() {
  var r3 = 0.002348976;
  var r4 = r0 + r3;
  r0 = r4;
- -- something is here -- 
+//assume 
  return;
 }

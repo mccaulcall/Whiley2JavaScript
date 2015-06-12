@@ -1,5 +1,5 @@
 function test() {
  var r0 = [];
- -- something is here -- 
+//debug %0  : [int]
  return;
 }

@@ -7,13 +7,13 @@ function test() {
  var r8 = 2;
  var r9 = 8;
  var r10 = 1;
- -- something is here -- 
+//newlist %11 = (%3, %4, %5, %6, %7, %8, %9, %10) : [int]
  r2 = r11;
  r0 = r2;
  var r13 = 0;
  r12 = r13;
  r1 = r12;
- -- something is here -- 
- -- something is here -- 
+//loop (%1, %14, %15, %16, %17, %18)
+ case 552:
  return;
 }

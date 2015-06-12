@@ -1,8 +1,8 @@
 function test() {
  var r3 = [97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122];
- -- something is here -- 
+//invoke %2 = (%3) ListAppend_Valid_4:append : function([int]) -> [int]
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

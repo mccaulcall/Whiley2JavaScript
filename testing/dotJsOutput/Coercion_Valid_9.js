@@ -1,9 +1,9 @@
 function test() {
  var r2 = 99;
  var r3 = 1;
- -- something is here -- 
+//newrecord %4 = (%2, %3) : {int code,int data}
  r1 = r4;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

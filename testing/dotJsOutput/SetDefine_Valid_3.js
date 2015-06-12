@@ -1,9 +1,9 @@
 function test() {
  var r2 = 98;
  var r3 = 99;
- -- something is here -- 
+//newset %4 = (%2, %3) : {int}
  r1 = r4;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

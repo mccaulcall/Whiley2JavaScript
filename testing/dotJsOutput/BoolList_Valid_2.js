@@ -6,21 +6,21 @@ function test() {
  var r6 = true;
  var r7 = true;
  var r8 = true;
- -- something is here -- 
+//newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]
  r1 = r9;
  r0 = r1;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//invoke %18 = (%0) BoolList_Valid_2:play : function([bool]) -> [bool]
  r0 = r18;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//invoke %27 = (%0) BoolList_Valid_2:play : function([bool]) -> [bool]
  r0 = r27;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//invoke %36 = (%0) BoolList_Valid_2:play : function([bool]) -> [bool]
  r0 = r36;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//invoke %45 = (%0) BoolList_Valid_2:play : function([bool]) -> [bool]
  r0 = r45;
- -- something is here -- 
+//assume 
  return;
 }

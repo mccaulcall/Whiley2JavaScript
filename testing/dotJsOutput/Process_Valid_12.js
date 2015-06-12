@@ -1,12 +1,12 @@
 function test() {
  var r3 = 1;
  var r4 = 2;
- -- something is here -- 
- -- something is here -- 
+//newrecord %5 = (%3, %4) : {int x,int y}
+//newobject %6 = %5 : &{int x,int y}
  var r7 = 1;
- -- something is here -- 
+//invoke %2 = (%6, %7) Process_Valid_12:send2 : method(Process_Valid_12:pState,int) -> int
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

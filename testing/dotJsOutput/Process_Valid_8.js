@@ -1,10 +1,10 @@
 function test() {
  var r3 = 1.23;
- -- something is here -- 
+//invoke %2 = (%3) Process_Valid_8:create : method(any) -> &Process_Valid_8:MyProc2
  r1 = r2;
  r0 = r1;
  var r4 = 1;
- -- something is here -- 
- -- something is here -- 
+//invoke %(%0, %4) Process_Valid_8:set : method(&Process_Valid_8:MyProc2,int) -> void
+//assume 
  return;
 }

@@ -3,15 +3,15 @@ function test() {
  var r3 = 1.0;
  var r4 = 2.0;
  var r5 = 3.0;
- -- something is here -- 
+//newlist %6 = (%3, %4, %5) : [real]
  var r7 = 1;
  var r8 = 3.4;
- -- something is here -- 
- -- something is here -- 
+//newlist %9 = (%8) : [real]
+//newmap %10 = (%2, %6, %7, %9) : {int->[real]}
  r1 = r10;
  r0 = r1;
- -- something is here -- 
+//invoke %11 = (%0) Dictionary_Valid_4:update : function(Dictionary_Valid_4:DL) -> Dictionary_Valid_4:DL
  r0 = r11;
- -- something is here -- 
+//assume 
  return;
 }

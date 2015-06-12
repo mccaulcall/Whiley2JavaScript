@@ -1,17 +1,30 @@
 function test() {
  var r4 = 1;
  var r5 = 2;
- -- something is here -- 
+//newlist %6 = (%4, %5) : [int]
  r3 = r6;
  r0 = r3;
  var r8 = 3;
  var r9 = 4;
- -- something is here -- 
+//newlist %10 = (%8, %9) : [int]
  r7 = r10;
  r1 = r7;
- -- something is here -- 
+//append %12 = %0, %1 : [int]
  r11 = r12;
  r2 = r11;
- -- assert statement here -- 
+ var pc = 0;
+ var r13 = 1;
+ switch (pc) {
+ var r14 = 2;
+ var r15 = 3;
+ var r16 = 4;
+//newlist %17 = (%13, %14, %15, %16) : [int]
+GOT: 96 2 17 label1156
+ if r2
+1156
+//fail
+ case 1156:
+ default: break;
+ }
  return;
 }

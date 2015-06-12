@@ -1,22 +1,22 @@
 function test() {
  var r3 = 1;
- -- something is here -- 
- -- something is here -- 
+//newrecord %4 = (%3) : {int data}
+//newobject %5 = %4 : &{int data}
  r2 = r5;
  r0 = r2;
  var r8 = 123;
- -- something is here -- 
+//invoke %7 = (%0, %8) FunctionRef_Valid_7:test : method(FunctionRef_Valid_7:Proc,int) -> int
  r6 = r7;
  r1 = r6;
- -- something is here -- 
+//assume 
  var r11 = 12545;
- -- something is here -- 
+//invoke %10 = (%0, %11) FunctionRef_Valid_7:test : method(FunctionRef_Valid_7:Proc,int) -> int
  r1 = r10;
- -- something is here -- 
+//assume 
  var r14 = 11;
- -- something is here -- 
- -- something is here -- 
+//neg %15 = %14 : int
+//invoke %13 = (%0, %15) FunctionRef_Valid_7:test : method(FunctionRef_Valid_7:Proc,int) -> int
  r1 = r13;
- -- something is here -- 
+//assume 
  return;
 }

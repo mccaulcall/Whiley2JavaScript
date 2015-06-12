@@ -1,14 +1,14 @@
 function test() {
  var r3 = 1;
  var r4 = 1;
- -- something is here -- 
+//invoke %2 = (%3, %4) Function_Valid_13:Point : function(int,int) -> Function_Valid_13:Point
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  var r10 = 1;
  var r11 = 2;
- -- something is here -- 
+//invoke %9 = (%10, %11) Function_Valid_13:Point : function(int,int) -> Function_Valid_13:Point
  r0 = r9;
- -- something is here -- 
+//assume 
  return;
 }

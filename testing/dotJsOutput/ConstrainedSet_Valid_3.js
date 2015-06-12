@@ -1,8 +1,8 @@
 function test() {
  var r3 = 0;
- -- something is here -- 
+//invoke %2 = (%3) ConstrainedSet_Valid_3:f : function(int) -> {ConstrainedSet_Valid_3:i8}
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

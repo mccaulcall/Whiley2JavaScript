@@ -1,8 +1,8 @@
 function test() {
- -- something is here -- 
- -- something is here -- 
+//lambda %3 = () MethodRef_Valid_1:read : method(int) -> int
+//invoke %2 = (%3) MethodRef_Valid_1:test : method(MethodRef_Valid_1:MyMeth) -> int
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

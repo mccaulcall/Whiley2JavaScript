@@ -1,10 +1,10 @@
 function test() {
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
  return;
 }

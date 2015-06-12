@@ -1,4 +1,4 @@
 function test() {
- -- something is here -- 
+//assume 
  return;
 }

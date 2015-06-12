@@ -2,19 +2,19 @@ function test() {
  var r4 = 1;
  var r5 = 2;
  var r6 = 3;
- -- something is here -- 
+//newlist %7 = (%4, %5, %6) : [int]
  r3 = r7;
  r0 = r3;
  var r9 = 5;
  var r10 = 6;
  var r11 = 7;
- -- something is here -- 
+//newlist %12 = (%9, %10, %11) : [int]
  r8 = r12;
  r1 = r8;
- -- something is here -- 
- -- something is here -- 
+//append %15 = %0, %1 : [int]
+//invoke %14 = (%15) ListAppend_Valid_11:f : function([int]) -> int
  r13 = r14;
  r2 = r13;
- -- something is here -- 
+//assume 
  return;
 }

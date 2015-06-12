@@ -8,11 +8,11 @@ function test() {
  var r9 = 7;
  var r10 = 8;
  var r11 = 9;
- -- something is here -- 
+//newset %12 = (%3, %4, %5, %6, %7, %8, %9, %10, %11) : {int}
  r2 = r12;
  r0 = r2;
  r13 = r0;
  r1 = r13;
- -- something is here -- 
+//assume 
  return;
 }

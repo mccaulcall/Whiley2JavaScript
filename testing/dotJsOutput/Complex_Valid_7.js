@@ -7,7 +7,7 @@ function test() {
  var r5 = 6;
  var r6 = 7;
  var r7 = 8;
- -- something is here -- 
- -- something is here -- 
+//newlist %8 = (%0, %1, %2, %3, %4, %5, %6, %7) : [int]
+//invoke %(%8) Complex_Valid_7:fn : method([int]) -> void
  return;
 }

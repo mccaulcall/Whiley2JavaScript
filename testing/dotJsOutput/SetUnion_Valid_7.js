@@ -1,5 +1,5 @@
 function test() {
- -- something is here -- 
- -- something is here -- 
+//assume 
+//assume 
  return;
 }

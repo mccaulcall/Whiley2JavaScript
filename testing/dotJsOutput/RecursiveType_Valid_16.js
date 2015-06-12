@@ -1,7 +1,7 @@
 function test() {
- -- something is here -- 
+//invoke %2 = () RecursiveType_Valid_16:parseTerm : function() -> RecursiveType_Valid_16:Expr
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

@@ -2,12 +2,12 @@ function test() {
  var r3 = 1;
  r2 = r3;
  r0 = r2;
- -- something is here -- 
+//invoke %5 = (%0) RecordAssign_Valid_7:f : function(RecordAssign_Valid_7:i8) -> RecordAssign_Valid_7:bytes
  r4 = r5;
  r1 = r4;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//newrecord %9 = (%0, %0) : {int b1,int b2}
  r1 = r9;
- -- something is here -- 
+//assume 
  return;
 }

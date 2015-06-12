@@ -10,8 +10,8 @@ function test() {
  var r12 = 8;
  var r13 = 9;
  var r14 = 10;
- -- something is here -- 
- -- something is here -- 
+//newlist %15 = (%5, %6, %7, %8, %9, %10, %11, %12, %13, %14) : [int]
+//invoke %3 = (%4, %15) For_Valid_7:f : function(bool,[int]) -> int
  r2 = r3;
  r0 = r2;
  var r18 = false;
@@ -25,11 +25,11 @@ function test() {
  var r26 = 8;
  var r27 = 9;
  var r28 = 10;
- -- something is here -- 
- -- something is here -- 
+//newlist %29 = (%19, %20, %21, %22, %23, %24, %25, %26, %27, %28) : [int]
+//invoke %17 = (%18, %29) For_Valid_7:f : function(bool,[int]) -> int
  r16 = r17;
  r1 = r16;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//assume 
  return;
 }

@@ -1,13 +1,13 @@
 function test() {
  var r3 = 1;
- -- something is here -- 
- -- something is here -- 
+//neg %4 = %3 : int
+//invoke %2 = (%4) Dictionary_Valid_11:f : function(int) -> Dictionary_Valid_11:edict
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  var r11 = 2;
- -- something is here -- 
+//invoke %10 = (%11) Dictionary_Valid_11:f : function(int) -> Dictionary_Valid_11:edict
  r0 = r10;
- -- something is here -- 
+//assume 
  return;
 }

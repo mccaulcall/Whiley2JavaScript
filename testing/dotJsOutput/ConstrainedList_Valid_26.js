@@ -7,10 +7,10 @@ function test() {
  var r7 = 2;
  var r8 = 8;
  var r9 = 1;
- -- something is here -- 
+//newlist %10 = (%2, %3, %4, %5, %6, %7, %8, %9) : [int]
  r1 = r10;
  r0 = r1;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//assume 
  return;
 }

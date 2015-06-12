@@ -1,28 +1,30 @@
 function test() {
  var r2 = 0;
  var r3 = 0;
- -- something is here -- 
+GOT: 97 2 3 label1165
+ if r2
+1165
  var r4 = 1;
  var r5 = 2;
  var r6 = 3;
- -- something is here -- 
+//newlist %7 = (%4, %5, %6) : [int]
  r0 = r7;
- -- something is here -- 
- -- something is here -- 
+//goto label1166
+ case 1165:
  var r8 = 1;
- -- something is here -- 
+//newlist %9 = (%8) : [int]
  var r10 = 2;
  var r11 = 3;
- -- something is here -- 
+//newlist %12 = (%10, %11) : [int]
  var r13 = 5;
- -- something is here -- 
- -- something is here -- 
+//newlist %14 = (%13) : [int]
+//newlist %15 = (%9, %12, %14) : [[int]]
  r0 = r15;
- -- something is here -- 
+ case 1166:
  var r16 = 1;
  var r17 = 0;
  var r18 = 1;
- -- something is here -- 
- -- something is here -- 
+//update %0[%17] = %18 : [[int]]|[int] -> [int|[int]]
+//assume 
  return;
 }

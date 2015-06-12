@@ -9,36 +9,36 @@ function test() {
  var r10 = 8;
  var r11 = 9;
  var r12 = 10;
- -- something is here -- 
+//newlist %13 = (%3, %4, %5, %6, %7, %8, %9, %10, %11, %12) : [int]
  r2 = r13;
  r0 = r2;
- -- something is here -- 
+//invoke %15 = () Process_Valid_9:Queue : method() -> &Process_Valid_9:Queue
  r14 = r15;
  r1 = r14;
  var r16 = 1;
- -- something is here -- 
- -- something is here -- 
+//invoke %(%1, %16) Process_Valid_9:put : method(&Process_Valid_9:Queue,int) -> void
+//assume 
  var r21 = 2;
- -- something is here -- 
- -- something is here -- 
+//invoke %(%1, %21) Process_Valid_9:put : method(&Process_Valid_9:Queue,int) -> void
+//assume 
  var r27 = 3;
- -- something is here -- 
- -- something is here -- 
+//invoke %(%1, %27) Process_Valid_9:put : method(&Process_Valid_9:Queue,int) -> void
+//assume 
  var r34 = 4;
- -- something is here -- 
- -- something is here -- 
+//invoke %(%1, %34) Process_Valid_9:put : method(&Process_Valid_9:Queue,int) -> void
+//assume 
  var r42 = 5;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//invoke %(%1, %42) Process_Valid_9:put : method(&Process_Valid_9:Queue,int) -> void
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
+//assume 
  return;
 }

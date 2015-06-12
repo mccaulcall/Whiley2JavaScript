@@ -3,74 +3,74 @@ function test() {
  var r6 = 2;
  var r7 = 1;
  var r8 = 0;
- -- something is here -- 
+//newlist %9 = (%7, %8) : [int]
  var r10 = 3;
- -- something is here -- 
+//neg %11 = %10 : int
  var r12 = 2;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//newlist %13 = (%11, %12) : [int]
+//newlist %14 = (%9, %13) : [[int]]
+//invoke %4 = (%5, %6, %14) ConstrainedRecord_Valid_9:Matrix : function(ConstrainedRecord_Valid_9:nat,ConstrainedRecord_Valid_9:nat,[[int]]) -> ConstrainedRecord_Valid_9:Matrix
  r3 = r4;
  r0 = r3;
  var r17 = 2;
  var r18 = 2;
  var r19 = 1;
- -- something is here -- 
+//neg %20 = %19 : int
  var r21 = 4;
- -- something is here -- 
+//newlist %22 = (%20, %21) : [int]
  var r23 = 3;
  var r24 = 5;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//newlist %25 = (%23, %24) : [int]
+//newlist %26 = (%22, %25) : [[int]]
+//invoke %16 = (%17, %18, %26) ConstrainedRecord_Valid_9:Matrix : function(ConstrainedRecord_Valid_9:nat,ConstrainedRecord_Valid_9:nat,[[int]]) -> ConstrainedRecord_Valid_9:Matrix
  r15 = r16;
  r1 = r15;
- -- something is here -- 
+//invoke %28 = (%0, %1) ConstrainedRecord_Valid_9:run : function(ConstrainedRecord_Valid_9:Matrix,ConstrainedRecord_Valid_9:Matrix) -> ConstrainedRecord_Valid_9:Matrix
  r27 = r28;
  r2 = r27;
- -- something is here -- 
+//assume 
  var r42 = 3;
  var r43 = 2;
  var r44 = 1;
  var r45 = 2;
  var r46 = 3;
- -- something is here -- 
+//newlist %47 = (%44, %45, %46) : [int]
  var r48 = 4;
  var r49 = 5;
  var r50 = 6;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//newlist %51 = (%48, %49, %50) : [int]
+//newlist %52 = (%47, %51) : [[int]]
+//invoke %41 = (%42, %43, %52) ConstrainedRecord_Valid_9:Matrix : function(ConstrainedRecord_Valid_9:nat,ConstrainedRecord_Valid_9:nat,[[int]]) -> ConstrainedRecord_Valid_9:Matrix
  r0 = r41;
  var r54 = 2;
  var r55 = 3;
  var r56 = 1;
  var r57 = 2;
- -- something is here -- 
+//newlist %58 = (%56, %57) : [int]
  var r59 = 3;
  var r60 = 4;
- -- something is here -- 
+//newlist %61 = (%59, %60) : [int]
  var r62 = 5;
  var r63 = 6;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//newlist %64 = (%62, %63) : [int]
+//newlist %65 = (%58, %61, %64) : [[int]]
+//invoke %53 = (%54, %55, %65) ConstrainedRecord_Valid_9:Matrix : function(ConstrainedRecord_Valid_9:nat,ConstrainedRecord_Valid_9:nat,[[int]]) -> ConstrainedRecord_Valid_9:Matrix
  r1 = r53;
- -- something is here -- 
+//invoke %66 = (%0, %1) ConstrainedRecord_Valid_9:run : function(ConstrainedRecord_Valid_9:Matrix,ConstrainedRecord_Valid_9:Matrix) -> ConstrainedRecord_Valid_9:Matrix
  r2 = r66;
- -- something is here -- 
+//assume 
  var r78 = 3;
  var r79 = 2;
  var r80 = 1;
  var r81 = 2;
  var r82 = 3;
- -- something is here -- 
+//newlist %83 = (%80, %81, %82) : [int]
  var r84 = 4;
  var r85 = 5;
  var r86 = 6;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//newlist %87 = (%84, %85, %86) : [int]
+//newlist %88 = (%83, %87) : [[int]]
+//invoke %77 = (%78, %79, %88) ConstrainedRecord_Valid_9:Matrix : function(ConstrainedRecord_Valid_9:nat,ConstrainedRecord_Valid_9:nat,[[int]]) -> ConstrainedRecord_Valid_9:Matrix
  r0 = r77;
  var r90 = 4;
  var r91 = 3;
@@ -78,22 +78,22 @@ function test() {
  var r93 = 2;
  var r94 = 3;
  var r95 = 4;
- -- something is here -- 
+//newlist %96 = (%92, %93, %94, %95) : [int]
  var r97 = 5;
  var r98 = 6;
  var r99 = 7;
  var r100 = 8;
- -- something is here -- 
+//newlist %101 = (%97, %98, %99, %100) : [int]
  var r102 = 9;
  var r103 = 10;
  var r104 = 11;
  var r105 = 12;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//newlist %106 = (%102, %103, %104, %105) : [int]
+//newlist %107 = (%96, %101, %106) : [[int]]
+//invoke %89 = (%90, %91, %107) ConstrainedRecord_Valid_9:Matrix : function(ConstrainedRecord_Valid_9:nat,ConstrainedRecord_Valid_9:nat,[[int]]) -> ConstrainedRecord_Valid_9:Matrix
  r1 = r89;
- -- something is here -- 
+//invoke %108 = (%0, %1) ConstrainedRecord_Valid_9:run : function(ConstrainedRecord_Valid_9:Matrix,ConstrainedRecord_Valid_9:Matrix) -> ConstrainedRecord_Valid_9:Matrix
  r2 = r108;
- -- something is here -- 
+//assume 
  return;
 }

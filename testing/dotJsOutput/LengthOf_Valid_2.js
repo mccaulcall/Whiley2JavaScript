@@ -2,10 +2,10 @@ function test() {
  var r3 = 1;
  var r4 = 2;
  var r5 = 3;
- -- something is here -- 
+//newlist %6 = (%3, %4, %5) : [int]
  r2 = r6;
  r0 = r2;
- -- something is here -- 
+//assume 
  var r10 = 1;
  var r11 = 2;
  var r12 = 3;
@@ -14,9 +14,9 @@ function test() {
  var r15 = 6;
  var r16 = 7;
  var r17 = 8;
- -- something is here -- 
+//newmap %18 = (%10, %11, %12, %13, %14, %15, %16, %17) : {int->int}
  r9 = r18;
  r1 = r9;
- -- something is here -- 
+//assume 
  return;
 }

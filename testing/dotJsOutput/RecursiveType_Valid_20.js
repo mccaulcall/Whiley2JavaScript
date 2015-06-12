@@ -1,12 +1,12 @@
 function test() {
  var r3 = 1;
  var r4 = 2;
- -- something is here -- 
+//newrecord %5 = (%3, %4) : {int lhs,int rhs}
  var r6 = 1;
- -- something is here -- 
- -- something is here -- 
+//newrecord %7 = (%5, %6) : {{int lhs,int rhs} lhs,int rhs}
+//invoke %2 = (%7) RecursiveType_Valid_20:f : function(RecursiveType_Valid_20:posExpr) -> RecursiveType_Valid_20:expr
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

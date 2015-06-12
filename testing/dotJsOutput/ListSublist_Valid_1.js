@@ -6,10 +6,10 @@ function test() {
  var r7 = 5;
  var r8 = 6;
  var r9 = 7;
- -- something is here -- 
- -- something is here -- 
+//newlist %10 = (%3, %4, %5, %6, %7, %8, %9) : [int]
+//invoke %2 = (%10) ListSublist_Valid_1:sum : function(ListSublist_Valid_1:posintlist) -> int
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

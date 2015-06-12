@@ -5,9 +5,9 @@ function test() {
  var r5 = 2.40;
  r4 = r5;
  r1 = r4;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//assume 
+//assume 
+//assume 
+//assume 
  return;
 }

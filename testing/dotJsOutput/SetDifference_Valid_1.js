@@ -2,24 +2,24 @@ function test() {
  var r3 = 1;
  var r4 = 2;
  var r5 = 3;
- -- something is here -- 
+//newset %6 = (%3, %4, %5) : {int}
  r2 = r6;
  r0 = r2;
  var r8 = 1;
  var r9 = 2;
- -- something is here -- 
+//newset %10 = (%8, %9) : {int}
  r7 = r10;
  r1 = r7;
- -- something is here -- 
+//assume 
  var r14 = 97;
  var r15 = 98;
  var r16 = 99;
- -- something is here -- 
+//newset %17 = (%14, %15, %16) : {int}
  r0 = r17;
  var r18 = 98;
  var r19 = 99;
- -- something is here -- 
+//newset %20 = (%18, %19) : {int}
  r1 = r20;
- -- something is here -- 
+//assume 
  return;
 }

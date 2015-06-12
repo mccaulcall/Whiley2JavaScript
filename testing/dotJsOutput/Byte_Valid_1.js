@@ -5,7 +5,7 @@ function test() {
  var r5 = 0;
  r4 = r5;
  r1 = r4;
- -- something is here -- 
- -- something is here -- 
+//loop (%0, %1, %6, %7, %8, %9, %10, %11, %12)
+ case 160:
  return;
 }

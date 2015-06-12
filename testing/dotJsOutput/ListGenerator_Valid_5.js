@@ -1,7 +1,7 @@
 function test() {
- -- something is here -- 
+//newlist %2 = () : [void]
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

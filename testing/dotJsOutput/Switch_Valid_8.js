@@ -2,16 +2,16 @@ function test() {
  var r2 = 1;
  r1 = r2;
  r0 = r1;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//switch %0 1->label1992, 2->label1993, *->label1991
+ case 1992:
+//assume 
  return;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//goto label1995
+ case 1993:
+//assume 
  return;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//goto label1995
+ case 1995:
+//assume 
  return;
 }

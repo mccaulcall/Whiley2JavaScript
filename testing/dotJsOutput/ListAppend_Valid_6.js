@@ -2,7 +2,7 @@ function test() {
  var r3 = 1.2;
  var r4 = 2.3;
  var r5 = 3.4;
- -- something is here -- 
+//newlist %6 = (%3, %4, %5) : [real]
  var r7 = 1;
  var r8 = 2;
  var r9 = 3;
@@ -11,18 +11,18 @@ function test() {
  var r12 = 6;
  var r13 = 7;
  var r14 = 8;
- -- something is here -- 
- -- something is here -- 
+//newlist %15 = (%7, %8, %9, %10, %11, %12, %13, %14) : [int]
+//invoke %2 = (%6, %15) ListAppend_Valid_6:test : function([real],[int]) -> bool
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  var r18 = 1.2;
  var r19 = 2.3;
  var r20 = 3.4;
- -- something is here -- 
- -- something is here -- 
- -- something is here -- 
+//newlist %21 = (%18, %19, %20) : [real]
+//newlist %22 = () : [void]
+//invoke %17 = (%21, %22) ListAppend_Valid_6:test : function([real],[int]) -> bool
  r0 = r17;
- -- something is here -- 
+//assume 
  return;
 }

@@ -1,20 +1,20 @@
 function test() {
  var r3 = 2;
- -- something is here -- 
+//neg %4 = %3 : int
  var r5 = 3;
- -- something is here -- 
+//neg %6 = %5 : int
  var r7 = 1;
  var r8 = 2;
  var r9 = 23;
- -- something is here -- 
+//neg %10 = %9 : int
  var r11 = 3;
  var r12 = 2345;
  var r13 = 4;
  var r14 = 5;
- -- something is here -- 
- -- something is here -- 
+//newlist %15 = (%4, %6, %7, %8, %10, %11, %12, %13, %14) : [int]
+//invoke %2 = (%15) For_Valid_2:extract : function([int]) -> For_Valid_2:nat
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

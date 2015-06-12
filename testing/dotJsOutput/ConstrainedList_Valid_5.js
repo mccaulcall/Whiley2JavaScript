@@ -1,8 +1,8 @@
 function test() {
  var r3 = 0;
- -- something is here -- 
+//invoke %2 = (%3) ConstrainedList_Valid_5:f : function(int) -> [int]
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

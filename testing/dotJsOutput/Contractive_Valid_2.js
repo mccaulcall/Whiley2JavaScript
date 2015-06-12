@@ -1,8 +1,8 @@
 function test() {
  var r3 = null;
- -- something is here -- 
+//invoke %2 = (%3) Contractive_Valid_2:f : method(Contractive_Valid_2:C1) -> Contractive_Valid_2:C3
  r1 = r2;
  r0 = r1;
- -- something is here -- 
+//assume 
  return;
 }

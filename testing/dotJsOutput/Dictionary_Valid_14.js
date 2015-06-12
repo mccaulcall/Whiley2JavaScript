@@ -1,10 +1,10 @@
 function test() {
  var r3 = 1;
- -- something is here -- 
- -- something is here -- 
+//neg %4 = %3 : int
+//invoke %2 = (%4) Dictionary_Valid_14:f : function(int) -> Dictionary_Valid_14:edict
  r1 = r2;
  r0 = r1;
- -- something is here -- 
- -- something is here -- 
+//assume 
+//assume 
  return;
 }

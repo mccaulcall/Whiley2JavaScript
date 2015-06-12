@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.apache.commons.io.FilenameUtils;
 import org.junit.Test;
@@ -14,14 +15,16 @@ import org.junit.Test;
 import wyil.io.WyilFilePrinter;
 import wyil.io.WyilFileReader;
 import wyil.lang.Code;
+import wyil.lang.Code.AbstractNaryAssignable;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.WyilFile;
 
 public class WyJS {
 
 	private static boolean testMode = true;
 	private static boolean generateTests = false;
-	private static String testSelectedFiles = "Assert";
+	private static String[] testSelectedFiles = {"Asserteq","Assertne"}; // = new String[0];
 
 	static PrintWriter fileWriter;
 	private static FilenameUtils FileUtils = new FilenameUtils();
@@ -31,15 +34,14 @@ public class WyJS {
 			File[] wyils = new File("testing/validWyil").listFiles();
 //			System.out.println("Number of files found: " + wyils.length);
 			ArrayList<String> wyilNames = new ArrayList<String>();
-			if (testSelectedFiles.equals("")) { for(File wyil : wyils) { if (wyil.isFile()) { wyilNames.add(FileUtils.removeExtension(wyil.getName())); } } }
-			else { wyilNames.add(testSelectedFiles); }
+			if (testSelectedFiles.length == 0) { for(File wyil : wyils) { if (wyil.isFile()) { wyilNames.add(FileUtils.removeExtension(wyil.getName())); } } }
+			else { for (String name : testSelectedFiles) { wyilNames.add(name); } }
+			Collections.sort(wyilNames);
 //			for(String wyilName : wyilNames) System.out.println(wyilName);
 			for (String fileName : wyilNames) {
-				System.out.println("FileName: " + fileName); System.out.println();
+				//System.out.println("FileName: " + fileName); System.out.println();
 				if (generateTests) {
-					System.out.println("");
-					System.out.println("@Test");
-					System.out.println("public void " + fileName + "() { runTest(\"" + fileName + "\"); }");
+					System.out.println("@Test public void " + fileName + "() { runTest(\"" + fileName + "\"); }");
 				} else {
 					try {
 //						First, make sure you've got a file
@@ -48,7 +50,8 @@ public class WyJS {
 						WyilFileReader r = new WyilFileReader(is);
 						WyilFile wyilFile = r.read();
 //						Third, print out its full contents (if selected files only)
-						if (!testSelectedFiles.equals("")) {
+						if (testSelectedFiles.length != 0) {
+							System.out.println(fileName);
 							WyilFilePrinter printer = new WyilFilePrinter(System.out);
 							printer.apply(wyilFile);
 							System.out.flush();
@@ -112,8 +115,12 @@ public class WyJS {
 			translate((Codes.Assign) bytecode);
 		} else if (bytecode instanceof Codes.Assert) {
 			translate((Codes.Assert) bytecode);
+		} else if (bytecode instanceof Codes.If) {
+			translate((Codes.If) bytecode);
+		} else if (bytecode instanceof Codes.Label) {
+			translate((Codes.Label) bytecode);
 		} else {
-			dummyline();
+			unknownCodeType(bytecode);
 		}
 	}
 
@@ -144,11 +151,30 @@ public class WyJS {
 	}
 
 	public static void translate(Codes.Assert bytecode) {
-		output(" -- assert statement here -- ");
+		output(" var pc = 0;");
+		Code ifcode = bytecode.get(0);
+		translate(ifcode);
+		output(" switch (pc) {");
+		for (int i = 1 ; i < bytecode.size() ; i++) translate(bytecode.get(i));
+		output(" default: break;");
+		output(" }");
 	}
 
-	public static void dummyline() {
-		output(" -- something is here -- ");
+	public static void translate(Codes.If bytecode) {
+		String op = "";
+		switch(bytecode.opcode()) {
+			case 96: op = "=="; break;
+			case 97: op = "!="; break;
+		}
+		output(" if (r" + bytecode.leftOperand + " " + op + " r" + bytecode.rightOperand + ") { pc = " + (bytecode.target.replaceAll("[^0-9]", "")) + "; }");
+	}
+
+	public static void translate(Codes.Label bytecode) {
+		output(" case " + bytecode.toString().replaceAll("[^0-9]", "") + ":");
+	}
+
+	public static void unknownCodeType(Code bytecode) {
+		output(" //" + bytecode.toString());
 	}
 
 	public static void output(String toprint) {

@@ -6,6 +6,15 @@ function test() {
  var r6 = r4 + r5;
  r1 = r6;
  r0 = r1;
- -- assert statement here -- 
+ var pc = 0;
+ var r7 = 7;
+ switch (pc) {
+GOT: 96 0 7 label1067
+ if r0
+1067
+//fail
+ case 1067:
+ default: break;
+ }
  return;
 }
