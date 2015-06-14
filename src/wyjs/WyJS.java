@@ -24,7 +24,8 @@ public class WyJS {
 
 	private static boolean testMode = true;
 	private static boolean generateTests = false;
-	private static String[] testSelectedFiles = {"Asserteq","Assertne"}; // = new String[0];
+	private static boolean writeFiles = true;
+	private static String[] testSelectedFiles = new String[0]; // = {"Asserteq","Assertne"};
 
 	static PrintWriter fileWriter;
 	private static FilenameUtils FileUtils = new FilenameUtils();
@@ -62,7 +63,7 @@ public class WyJS {
 								translate((WyilFile.FunctionOrMethod)b,fileName);
 							}
 						}
-					} catch (IOException e) { System.out.println(e.getMessage()); }
+					} catch (IOException e) { System.out.println(e.getMessage());}
 				}
 			}
 
@@ -84,11 +85,13 @@ public class WyJS {
 	public static void translate(WyilFile.FunctionOrMethod m, String fileName) {
 		try { fileWriter = new PrintWriter("testing/dotJsOutput/"+fileName+".js"); }
 		catch (FileNotFoundException e) { e.printStackTrace(); }
-		output("function " + m.name() + "(" + paramsString(m) + ") {");
+		output(0,  "function " + m.name() + "(" + paramsString(m) + ") {");
+		output(1, "while(true) { var pc = 0; switch (pc) {");
+		output("case 0:");
 		for (Code bytecode : m.body()) {
 			translate(bytecode);
 		}
-		output("}");
+		output(0, "}}}");
 		fileWriter.close();
 		System.out.println();
 		System.out.println();
@@ -119,6 +122,10 @@ public class WyJS {
 			translate((Codes.If) bytecode);
 		} else if (bytecode instanceof Codes.Label) {
 			translate((Codes.Label) bytecode);
+		} else if (bytecode instanceof Codes.Goto) {
+			translate((Codes.Goto) bytecode);
+		} else if (bytecode instanceof Codes.Fail) {
+			translate((Codes.Fail) bytecode);
 		} else {
 			unknownCodeType(bytecode);
 		}
@@ -126,18 +133,18 @@ public class WyJS {
 
 	public static void translate(Codes.Return bytecode) {
 		if(bytecode.operand != Codes.NULL_REG) {
-			output(" return r" + bytecode.operand + ";");
+			output("return r" + bytecode.operand + ";");
 		} else {
-			output(" return" + ";");
+			output("return" + ";");
 		}
 	}
 
 	public static void translate(Codes.Const bytecode) {
-		output(" var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
+		output("var r"  + bytecode.target() + " = " +  bytecode.constant + ";");
 	}
 
 	public static void translate(Codes.BinaryOperator bytecode) {
-		String output = " var r" + bytecode.target() + " = r" + bytecode.operand(0);
+		String output = "var r" + bytecode.target() + " = r" + bytecode.operand(0);
 		if (bytecode.kind.toString().equals("add")) output += " + ";
 		else if (bytecode.kind.toString().equals("sub")) output += " - ";
 		else if (bytecode.kind.toString().equals("mul")) output += " * ";
@@ -147,17 +154,11 @@ public class WyJS {
 	}
 
 	public static void translate(Codes.Assign bytecode) {
-		output(" r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
+		output("r" + bytecode.target() + " = r" + bytecode.operand(0) + ";");
 	}
 
 	public static void translate(Codes.Assert bytecode) {
-		output(" var pc = 0;");
-		Code ifcode = bytecode.get(0);
-		translate(ifcode);
-		output(" switch (pc) {");
-		for (int i = 1 ; i < bytecode.size() ; i++) translate(bytecode.get(i));
-		output(" default: break;");
-		output(" }");
+		for (Code code: bytecode) translate(code);
 	}
 
 	public static void translate(Codes.If bytecode) {
@@ -166,19 +167,37 @@ public class WyJS {
 			case 96: op = "=="; break;
 			case 97: op = "!="; break;
 		}
-		output(" if (r" + bytecode.leftOperand + " " + op + " r" + bytecode.rightOperand + ") { pc = " + (bytecode.target.replaceAll("[^0-9]", "")) + "; }");
+		String lo = "r" + bytecode.leftOperand;
+		String ro = "r" + bytecode.rightOperand;
+		String target = "pc = " + (bytecode.target.replaceAll("[^0-9]", "")) + "; continue;";
+		output("if (" + lo + " " + op + " " + ro + ") { " + target + " }");
 	}
 
 	public static void translate(Codes.Label bytecode) {
-		output(" case " + bytecode.toString().replaceAll("[^0-9]", "") + ":");
+		output("case " + bytecode.toString().replaceAll("[^0-9]", "") + ":");
+	}
+
+	public static void translate(Codes.Goto bytecode) {
+		output("pc = " + (bytecode.target.replaceAll("[^0-9]", "")) + "; continue;");
+	}
+
+	public static void translate(Codes.Fail bytecode) {
+		output("throw \"" + bytecode.toString() + "\";");
 	}
 
 	public static void unknownCodeType(Code bytecode) {
 		output(" //" + bytecode.toString());
 	}
 
+	public static void output(int indent, String toprint) {
+		String ind = "";
+		for (int i = 0 ; i < indent ; i++) ind += " ";
+		if (!generateTests) System.out.println(ind + toprint); // for display purposes only
+		if (writeFiles) fileWriter.println(ind + toprint); // writes line to file
+	}
+
 	public static void output(String toprint) {
-		System.out.println(toprint);
-		fileWriter.println(toprint);
+		if (!generateTests) System.out.println("  " + toprint); // for display purposes only
+		if (writeFiles) fileWriter.println("  " + toprint); // writes line to file
 	}
 }

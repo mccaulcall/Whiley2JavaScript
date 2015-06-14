@@ -1,3 +1,3 @@
 function f(int x):
-    int y = x + 1
+    int y = x
     assert x == y

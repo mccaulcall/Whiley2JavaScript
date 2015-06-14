@@ -1,8 +1,10 @@
 function test() {
-//assume 
-//assume 
-//assume 
-//assume 
-//assume 
- return;
-}
+ while(true) { var pc = 0; switch (pc) {
+  case 0:
+   //assume 
+   //assume 
+   //assume 
+   //assume 
+   //assume 
+  return;
+}}}

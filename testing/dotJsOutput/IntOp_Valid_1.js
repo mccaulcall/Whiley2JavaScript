@@ -1,68 +1,40 @@
 function test() {
- var r2 = 112233445566778899;
- r1 = r2;
- r0 = r1;
- var pc = 0;
- var r3 = 112233445566778899;
- switch (pc) {
-GOT: 96 0 3 label1071
- if r0
-1071
-//fail
- case 1071:
- default: break;
- }
- var r4 = 1;
- var r5 = r0 + r4;
- r0 = r5;
- var pc = 0;
- var r6 = 112233445566778900;
- switch (pc) {
-GOT: 96 0 6 label1072
- if r0
-1072
-//fail
- case 1072:
- default: break;
- }
- var r7 = 556;
- var r8 = r0 - r7;
- r0 = r8;
- var pc = 0;
- var r9 = 112233445566778344;
- switch (pc) {
-GOT: 96 0 9 label1073
- if r0
-1073
-//fail
- case 1073:
- default: break;
- }
- var r10 = 123;
- var r11 = r0 * r10;
- r0 = r11;
- var pc = 0;
- var r12 = 13804713804713736312;
- switch (pc) {
-GOT: 96 0 12 label1074
- if r0
-1074
-//fail
- case 1074:
- default: break;
- }
- var r13 = 2;
- var r14 = r0 / r13;
- r0 = r14;
- var pc = 0;
- var r15 = 6902356902356868156;
- switch (pc) {
-GOT: 96 0 15 label1075
- if r0
-1075
-//fail
- case 1075:
- default: break;
- }
- return;
-}
+ while(true) { var pc = 0; switch (pc) {
+  case 0:
+  var r2 = 112233445566778899;
+  r1 = r2;
+  r0 = r1;
+  var r3 = 112233445566778899;
+  if (r0 == r3) { pc = 1071; continue; }
+  throw "fail";
+  case 1071:
+  var r4 = 1;
+  var r5 = r0 + r4;
+  r0 = r5;
+  var r6 = 112233445566778900;
+  if (r0 == r6) { pc = 1072; continue; }
+  throw "fail";
+  case 1072:
+  var r7 = 556;
+  var r8 = r0 - r7;
+  r0 = r8;
+  var r9 = 112233445566778344;
+  if (r0 == r9) { pc = 1073; continue; }
+  throw "fail";
+  case 1073:
+  var r10 = 123;
+  var r11 = r0 * r10;
+  r0 = r11;
+  var r12 = 13804713804713736312;
+  if (r0 == r12) { pc = 1074; continue; }
+  throw "fail";
+  case 1074:
+  var r13 = 2;
+  var r14 = r0 / r13;
+  r0 = r14;
+  var r15 = 6902356902356868156;
+  if (r0 == r15) { pc = 1075; continue; }
+  throw "fail";
+  case 1075:
+  return;
+}}}

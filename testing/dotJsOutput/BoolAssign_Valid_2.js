@@ -1,139 +1,89 @@
 function test() {
- var r3 = true;
- r2 = r3;
- r0 = r2;
- var r5 = false;
- r4 = r5;
- r1 = r4;
- var pc = 0;
- var r6 = true;
- switch (pc) {
-GOT: 96 0 6 label23
- if r0
-23
-//goto label24
- case 23:
- var r7 = true;
-GOT: 96 0 7 label25
- if r0
-25
- case 24:
- var r8 = false;
-//goto label26
- case 25:
- var r8 = true;
- case 26:
- var r9 = true;
-GOT: 96 8 9 label27
- if r8
-27
-//fail
- case 27:
- default: break;
- }
- var pc = 0;
- var r10 = true;
- switch (pc) {
-GOT: 96 0 10 label28
- if r0
-28
-//goto label29
- case 28:
- var r11 = true;
-GOT: 96 1 11 label30
- if r1
-30
- case 29:
- var r12 = false;
-//goto label31
- case 30:
- var r12 = true;
- case 31:
- var r13 = false;
-GOT: 96 12 13 label32
- if r12
-32
-//fail
- case 32:
- default: break;
- }
- var pc = 0;
- var r14 = true;
- switch (pc) {
-GOT: 96 1 14 label33
- if r1
-33
-//goto label34
- case 33:
- var r15 = true;
-GOT: 96 0 15 label35
- if r0
-35
- case 34:
- var r16 = false;
-//goto label36
- case 35:
- var r16 = true;
- case 36:
- var r17 = false;
-GOT: 96 16 17 label37
- if r16
-37
-//fail
- case 37:
- default: break;
- }
- var pc = 0;
- var r18 = true;
- switch (pc) {
-GOT: 96 1 18 label38
- if r1
-38
-//goto label39
- case 38:
- var r19 = true;
-GOT: 96 1 19 label40
- if r1
-40
- case 39:
- var r20 = false;
-//goto label41
- case 40:
- var r20 = true;
- case 41:
- var r21 = false;
-GOT: 96 20 21 label42
- if r20
-42
-//fail
- case 42:
- default: break;
- }
- var pc = 0;
- var r22 = true;
- switch (pc) {
-GOT: 96 1 22 label43
- if r1
-43
-//goto label44
- case 43:
-//fail
- case 44:
- default: break;
- }
- var pc = 0;
- var r23 = true;
- switch (pc) {
-GOT: 96 0 23 label45
- if r0
-45
-//goto label46
- case 45:
-//goto label47
- case 46:
-//fail
- case 47:
- default: break;
- }
- return;
-}
+ while(true) { var pc = 0; switch (pc) {
+  case 0:
+  var r3 = true;
+  r2 = r3;
+  r0 = r2;
+  var r5 = false;
+  r4 = r5;
+  r1 = r4;
+  var r6 = true;
+  if (r0 == r6) { pc = 23; continue; }
+  pc = 24; continue;
+  case 23:
+  var r7 = true;
+  if (r0 == r7) { pc = 25; continue; }
+  case 24:
+  var r8 = false;
+  pc = 26; continue;
+  case 25:
+  var r8 = true;
+  case 26:
+  var r9 = true;
+  if (r8 == r9) { pc = 27; continue; }
+  throw "fail";
+  case 27:
+  var r10 = true;
+  if (r0 == r10) { pc = 28; continue; }
+  pc = 29; continue;
+  case 28:
+  var r11 = true;
+  if (r1 == r11) { pc = 30; continue; }
+  case 29:
+  var r12 = false;
+  pc = 31; continue;
+  case 30:
+  var r12 = true;
+  case 31:
+  var r13 = false;
+  if (r12 == r13) { pc = 32; continue; }
+  throw "fail";
+  case 32:
+  var r14 = true;
+  if (r1 == r14) { pc = 33; continue; }
+  pc = 34; continue;
+  case 33:
+  var r15 = true;
+  if (r0 == r15) { pc = 35; continue; }
+  case 34:
+  var r16 = false;
+  pc = 36; continue;
+  case 35:
+  var r16 = true;
+  case 36:
+  var r17 = false;
+  if (r16 == r17) { pc = 37; continue; }
+  throw "fail";
+  case 37:
+  var r18 = true;
+  if (r1 == r18) { pc = 38; continue; }
+  pc = 39; continue;
+  case 38:
+  var r19 = true;
+  if (r1 == r19) { pc = 40; continue; }
+  case 39:
+  var r20 = false;
+  pc = 41; continue;
+  case 40:
+  var r20 = true;
+  case 41:
+  var r21 = false;
+  if (r20 == r21) { pc = 42; continue; }
+  throw "fail";
+  case 42:
+  var r22 = true;
+  if (r1 == r22) { pc = 43; continue; }
+  pc = 44; continue;
+  case 43:
+  throw "fail";
+  case 44:
+  var r23 = true;
+  if (r0 == r23) { pc = 45; continue; }
+  pc = 46; continue;
+  case 45:
+  pc = 47; continue;
+  case 46:
+  throw "fail";
+  case 47:
+  return;
+}}}

@@ -1,14 +1,10 @@
 function test() {
- var pc = 0;
- var r0 = 5;
- switch (pc) {
- var r1 = 5;
-GOT: 96 0 1 label1266
- if r0
-1266
-//fail
- case 1266:
- default: break;
- }
- return;
-}
+ while(true) { var pc = 0; switch (pc) {
+  case 0:
+  var r0 = 5;
+  var r1 = 5;
+  if (r0 == r1) { pc = 1266; continue; }
+  throw "fail";
+  case 1266:
+  return;
+}}}

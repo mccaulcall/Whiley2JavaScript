@@ -1,13 +1,15 @@
 function test() {
- var r3 = 1.20;
- r2 = r3;
- r0 = r2;
- var r5 = 2.40;
- r4 = r5;
- r1 = r4;
-//assume 
-//assume 
-//assume 
-//assume 
- return;
-}
+ while(true) { var pc = 0; switch (pc) {
+  case 0:
+  var r3 = 1.20;
+  r2 = r3;
+  r0 = r2;
+  var r5 = 2.40;
+  r4 = r5;
+  r1 = r4;
+   //assume 
+   //assume 
+   //assume 
+   //assume 
+  return;
+}}}
