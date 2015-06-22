@@ -48,6 +48,7 @@ public class WyJS {
 //						First, make sure you've got a file
 						InputStream is = new FileInputStream("testing/validWyil/" + fileName + ".wyil");
 //						Second, read the WyIL file from the file input stream
+						System.out.println(fileName);
 						WyilFileReader r = new WyilFileReader(is);
 						WyilFile wyilFile = r.read();
 //						Third, print out its full contents (if selected files only)
