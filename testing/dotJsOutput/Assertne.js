@@ -5,8 +5,8 @@ function f(r0) {
   var r4 = r0 + r3;
   r2 = r4;
   r1 = r2;
-  if (r0 != r1) { pc = 15; continue; }
+  if (r0 != r1) { pc = 1; continue; }
   throw "fail";
-  case 15:
+  case 1:
   return;
 }}}

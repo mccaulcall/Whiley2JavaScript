@@ -25,7 +25,8 @@ public class WyJS {
 	private static boolean testMode = true;
 	private static boolean generateTests = false;
 	private static boolean writeFiles = true;
-	private static String[] testSelectedFiles = new String[0]; // = {"Asserteq","Assertne"};
+	private static boolean declareASM = false;
+	private static String[] testSelectedFiles = {"Asserteq","Assertne"}; // = new String[0]; //
 
 	static PrintWriter fileWriter;
 	private static FilenameUtils FileUtils = new FilenameUtils();
@@ -87,6 +88,7 @@ public class WyJS {
 		try { fileWriter = new PrintWriter("testing/dotJsOutput/"+fileName+".js"); }
 		catch (FileNotFoundException e) { e.printStackTrace(); }
 		output(0,  "function " + m.name() + "(" + paramsString(m) + ") {");
+		if (declareASM) asm();
 		output(1, "while(true) { var pc = 0; switch (pc) {");
 		output("case 0:");
 		for (Code bytecode : m.body()) {
@@ -197,8 +199,12 @@ public class WyJS {
 		if (writeFiles) fileWriter.println(ind + toprint); // writes line to file
 	}
 
-	public static void output(String toprint) {
+	private static void output(String toprint) {
 		if (!generateTests) System.out.println("  " + toprint); // for display purposes only
 		if (writeFiles) fileWriter.println("  " + toprint); // writes line to file
+	}
+
+	private static void asm() { // this will write the required ASM.js lines at the top of the code
+		output("\"use asm\";"); // this line tells JIT to try interpret as ASM.js
 	}
 }
