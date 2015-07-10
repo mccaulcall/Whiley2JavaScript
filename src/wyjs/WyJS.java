@@ -10,14 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.apache.commons.io.FilenameUtils;
-import org.junit.Test;
-
 import wyil.io.WyilFilePrinter;
 import wyil.io.WyilFileReader;
-import wyil.lang.Code;
-import wyil.lang.Code.AbstractNaryAssignable;
-import wyil.lang.Codes;
-import wyil.lang.Type;
+import wyil.lang.*;
 import wyil.lang.WyilFile;
 
 public class WyJS {
@@ -29,14 +24,13 @@ public class WyJS {
 	private static String[] testSelectedFiles = {"Asserteq","Assertne"}; // = new String[0]; //
 
 	static PrintWriter fileWriter;
-	private static FilenameUtils FileUtils = new FilenameUtils();
 
 	public static void main(String[] args) {
 		if (testMode) {
 			File[] wyils = new File("testing/validWyil").listFiles();
 //			System.out.println("Number of files found: " + wyils.length);
 			ArrayList<String> wyilNames = new ArrayList<String>();
-			if (testSelectedFiles.length == 0) { for(File wyil : wyils) { if (wyil.isFile()) { wyilNames.add(FileUtils.removeExtension(wyil.getName())); } } }
+			if (testSelectedFiles.length == 0) { for(File wyil : wyils) { if (wyil.isFile()) { wyilNames.add(FilenameUtils.removeExtension(wyil.getName())); } } }
 			else { for (String name : testSelectedFiles) { wyilNames.add(name); } }
 			Collections.sort(wyilNames);
 //			for(String wyilName : wyilNames) System.out.println(wyilName);
@@ -77,7 +71,7 @@ public class WyJS {
 //				Second, try to interpret into js
 				for (WyilFile.Block b : wyilFile.blocks()) {
 					if (b instanceof WyilFile.FunctionOrMethod) {
-						translate((WyilFile.FunctionOrMethod)b,FileUtils.removeExtension(args[0]));
+						translate((WyilFile.FunctionOrMethod)b,FilenameUtils.removeExtension(args[0]));
 					}
 				}
 			} catch (IOException e) { System.out.println(e.getMessage()); }
