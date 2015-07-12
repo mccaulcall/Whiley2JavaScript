@@ -4,10 +4,14 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.*;
 import org.mozilla.javascript.Context;
@@ -16,9 +20,23 @@ import org.mozilla.javascript.ScriptableObject;
 
 public class Tester {
 
+	private static String[] testSelectedFiles = {"Asserteq"}; // = new String[0]; //
+
 	private void runTest(String fileName) {
-		String dotJsOutputFile = fileName + ".js";
-		validateJavaScript(dotJsOutputFile);
+		if (testSelectedFiles.length == 0) {
+			generateJavaScript(fileName + ".wyil");
+			validateJavaScript(fileName + ".js");
+		} else if (Arrays.asList(testSelectedFiles).contains(fileName)) {
+			generateJavaScript(fileName + ".wyil");
+			validateJavaScript(fileName + ".js");
+		}
+	}
+
+	private static boolean generateJavaScript(String fileName) {
+		String fileLocation = "testing/validWyil/" + fileName;
+		InputStream is = new FileInputStream("testing/validWyil/" + fileName + ".wyil");
+		//WyJS.main(is);
+		return false;
 	}
 
 	private static String validateJavaScript(String fileName) {

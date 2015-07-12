@@ -22,11 +22,11 @@ import wyil.lang.WyilFile;
 
 public class WyJS {
 
-	private static boolean testMode = true;
-	private static boolean generateTests = false;
+	private static boolean testMode = false;
 	private static boolean writeFiles = true;
 	private static boolean declareASM = false;
-	private static String[] testSelectedFiles = {"Asserteq","Assertne"}; // = new String[0]; //
+
+	private static String[] testSelectedFiles = {"Asserteq"};
 
 	static PrintWriter fileWriter;
 	private static FilenameUtils FileUtils = new FilenameUtils();
@@ -42,33 +42,28 @@ public class WyJS {
 //			for(String wyilName : wyilNames) System.out.println(wyilName);
 			for (String fileName : wyilNames) {
 				//System.out.println("FileName: " + fileName); System.out.println();
-				if (generateTests) {
-					System.out.println("@Test public void " + fileName + "() { runTest(\"" + fileName + "\"); }");
-				} else {
-					try {
+				try {
 //						First, make sure you've got a file
-						InputStream is = new FileInputStream("testing/validWyil/" + fileName + ".wyil");
+					InputStream is = new FileInputStream("testing/validWyil/" + fileName + ".wyil");
 //						Second, read the WyIL file from the file input stream
-						System.out.println(fileName);
-						WyilFileReader r = new WyilFileReader(is);
-						WyilFile wyilFile = r.read();
+					System.out.println(fileName);
+					WyilFileReader r = new WyilFileReader(is);
+					WyilFile wyilFile = r.read();
 //						Third, print out its full contents (if selected files only)
-						if (testSelectedFiles.length != 0) {
-							System.out.println(fileName);
-							WyilFilePrinter printer = new WyilFilePrinter(System.out);
-							printer.apply(wyilFile);
-							System.out.flush();
-						}
+					if (testSelectedFiles.length != 0) {
+						System.out.println(fileName);
+						WyilFilePrinter printer = new WyilFilePrinter(System.out);
+						printer.apply(wyilFile);
+						System.out.flush();
+					}
 //						Fourth, try to interpret into js
-						for (WyilFile.Block b : wyilFile.blocks()) {
-							if (b instanceof WyilFile.FunctionOrMethod) {
-								translate((WyilFile.FunctionOrMethod)b,fileName);
-							}
+					for (WyilFile.Block b : wyilFile.blocks()) {
+						if (b instanceof WyilFile.FunctionOrMethod) {
+							translate((WyilFile.FunctionOrMethod)b,fileName);
 						}
-					} catch (IOException e) { System.out.println(e.getMessage());}
-				}
+					}
+				} catch (IOException e) { System.out.println(e.getMessage());}
 			}
-
 		} else {
 			try {
 //				First, read the WyIL file specified on the command-line
@@ -195,12 +190,12 @@ public class WyJS {
 	public static void output(int indent, String toprint) {
 		String ind = "";
 		for (int i = 0 ; i < indent ; i++) ind += " ";
-		if (!generateTests) System.out.println(ind + toprint); // for display purposes only
+		System.out.println(ind + toprint); // for display purposes only
 		if (writeFiles) fileWriter.println(ind + toprint); // writes line to file
 	}
 
 	private static void output(String toprint) {
-		if (!generateTests) System.out.println("  " + toprint); // for display purposes only
+		System.out.println("  " + toprint); // for display purposes only
 		if (writeFiles) fileWriter.println("  " + toprint); // writes line to file
 	}
 
