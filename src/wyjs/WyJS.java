@@ -16,6 +16,7 @@ public class WyJS {
 	private static boolean ASM = false;
 
 	static PrintWriter fileWriter;
+
 	public static void main(String[] args) {
 		try {
 			String wyilInputFolder = "", jsOutputFolder = "";
@@ -28,9 +29,12 @@ public class WyJS {
 			for (WyilFile.Block b : wyilFile.blocks()) {
 				if (b instanceof WyilFile.FunctionOrMethod) {
 					translate((WyilFile.FunctionOrMethod)b,FilenameUtils.removeExtension(args[0]), jsOutputFolder);
+
 				}
 			}
 		} catch (IOException e) { System.out.println(e.getMessage()); }
+
+
 	}
 
 	private static void translate(WyilFile.FunctionOrMethod m, String fileName, String outputFolder) {
