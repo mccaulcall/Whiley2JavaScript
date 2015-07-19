@@ -20,7 +20,7 @@ public class TestFile {
 	}
 
 	private static void generateJavaScript(String fileName) {
-		String files[] = {fileName,"testing/validWyil/","testing/dotJsOutput/"};
+		String files[] = {fileName,"testing/dotJsOutput/","testing/validWyil/"};
 		try { WyJS.main(files); }
 		catch (Exception e) { System.out.println(); }
 	}
