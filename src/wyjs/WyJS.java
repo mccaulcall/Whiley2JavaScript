@@ -11,7 +11,7 @@ import wyil.lang.WyilFile;
 
 public class WyJS {
 
-	private static boolean writeFiles = false;
+	private static boolean writeFiles = true;
 	private static boolean ASM = false;
 
 	static PrintWriter fileWriter;
@@ -46,10 +46,12 @@ public class WyJS {
 	}
 
 	private static void translate(int indent, WyilFile.FunctionOrMethod m, String fileName) {
+		String methodBody[] = Translater.translateWyIL(m.body());
+		if (methodBody.length == 0) return;
 		output(indent,  "function " + m.name() + "(" + paramsString(m) + ") {");
 		output(indent+1, "while(true) { var pc = 0; switch (pc) {");
 		output(new String[] {"case 0:"});
-		output(Translater.translateWyIL(m.body()));
+		output(methodBody);
 		output(indent, "}}}");
 	}
 

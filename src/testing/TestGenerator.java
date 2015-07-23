@@ -8,7 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 
 public class TestGenerator {
 
-	private static String[] testSelectedFiles = {"Basic", "BasicPlus", "Asserteq", "Assertne"}; // = new String[0]; //
+	private static String[] testSelectedFiles = new String[0]; // = {"Basic", "BasicPlus", "Asserteq", "Assertne"}; //
 
 	public static void main(String[] args) {
 		ArrayList<String> wyilNames = new ArrayList<String>();
@@ -21,7 +21,7 @@ public class TestGenerator {
 		}
 		Collections.sort(wyilNames);
 		for (String fileName : wyilNames)
-			System.out.println("@Test public void " + fileName + "() { TestFile.runTest(\"" + fileName + "\"); }");
+			System.out.println("@Test public void " + fileName + "() throws Exception { TestFile.runTest(\"" + fileName + "\"); }");
 		//System.out.println("\n\n" + "Files Found: " + wyils.length);
 	}
 

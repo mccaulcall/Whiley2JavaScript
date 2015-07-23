@@ -7,17 +7,20 @@ import wyil.lang.Codes;
 import wyil.util.AttributedCodeBlock;
 
 public class Translater {
-	
+
 	private static ArrayList<String> body;
+	private static boolean fail;
 
 	public static String[] translateWyIL(AttributedCodeBlock codebody) {
 		body = new ArrayList<>();
+		fail = false;
 		for (Code bytecode : codebody) translate(bytecode);
 		String stringArray[] = new String[body.size()];
+		if (fail) return new String[] {"//could not interpret method body"};
 		return body.toArray(stringArray);
 	}
-		
-		
+
+
 	private static void translate(Code bytecode) {
 		switch (bytecode.getClass().getSimpleName()) {
 		case "Return": translate((Codes.Return) bytecode); break;
@@ -74,7 +77,7 @@ public class Translater {
 	}
 
 	private static void translate(Codes.Label bytecode) {
-		body.add("case " + ":"); //(bytecode.toString().replaceAll("[^0-9]", "")) + 
+		body.add("case " + ":"); //(bytecode.toString().replaceAll("[^0-9]", "")) +
 	}
 
 	private static void translate(Codes.Goto bytecode) {
@@ -88,7 +91,7 @@ public class Translater {
 	}
 
 	private static void unknownCodeType(Code bytecode) {
-		body.add(" //" + bytecode.toString());
+		fail = true;
 	}
 
 }

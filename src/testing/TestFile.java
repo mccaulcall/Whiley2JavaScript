@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
@@ -14,18 +15,18 @@ import wyjs.WyJS;
 
 public class TestFile {
 
-	public static void runTest(String fileName) {
+	public static void runTest(String fileName) throws Exception {
 		generateJavaScript(fileName + ".wyil");
 		validateJavaScript(fileName + ".js");
 	}
 
-	private static void generateJavaScript(String fileName) {
+	private static void generateJavaScript(String fileName) throws Exception {
 		String files[] = {fileName,"testing/dotJsOutput/","testing/validWyil/"};
 		try { WyJS.main(files); }
-		catch (Exception e) { System.out.println(); }
+		catch (Exception e) { System.out.println(); throw new Exception();}
 	}
 
-	private static String validateJavaScript(String fileName) {
+	private static void validateJavaScript(String fileName) throws Exception {
 		OutputStream out = new ByteArrayOutputStream();
 	    try {
 		    Reader file = new FileReader(new File("testing/dotJsOutput/" + fileName));
@@ -37,17 +38,12 @@ public class TestFile {
 		    ScriptableObject.putConstProperty(scope, "sysout", sysout);
 		    ScriptableObject.putConstProperty(scope, "syserr", syserr);
 		    context.evaluateReader(scope, file, "testing/dotJsOutput/" + fileName, 1, null);
-		    System.err.println(err);
-		    return out.toString();
 	    } catch (Exception e) {
-	    	System.err.print(out);
-//	    	e.printStackTrace();
-	    	System.out.println("Error testing: " + fileName);
-	    	System.out.println(e.toString());
-//	    	fail("Problem running compiled test");
+	    	System.out.println("Error testing: " + fileName + "\n" + e.toString() + "\n\n\n");
+	    	throw new Exception();
 	    } finally {
 	    	Context.exit();
 	    }
-	    return null;
 	}
+
 }
