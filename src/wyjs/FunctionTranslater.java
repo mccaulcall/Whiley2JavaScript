@@ -4,22 +4,30 @@ import java.util.ArrayList;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.util.AttributedCodeBlock;
+import wyil.lang.WyilFile;
+import wyil.lang.WyilFile.FunctionOrMethod;
 
-public class Translater {
+public class FunctionTranslater {
 
 	private static ArrayList<String> body;
 	private static boolean fail;
 
-	public static String[] translateWyIL(AttributedCodeBlock codebody) {
-		body = new ArrayList<>();
-		fail = false;
-		for (Code bytecode : codebody) translate(bytecode);
+	public static String[] translateWyil(FunctionOrMethod m) {
+		body = new ArrayList<>(); fail = false;
+		addPreamble(m);
+		for (Code bytecode : m.body()) if (!fail) translate(bytecode);
+		addPostamble();
 		String stringArray[] = new String[body.size()];
-		if (fail) return new String[] {"//could not interpret method body"};
 		return body.toArray(stringArray);
 	}
 
+	public static ArrayList<String> translateFunction(FunctionOrMethod m) {
+		body = new ArrayList<>(); fail = false;
+		addPreamble(m);
+		for (Code bytecode : m.body()) if (!fail) translate(bytecode);
+		addPostamble();
+		return body;
+	}
 
 	private static void translate(Code bytecode) {
 		switch (bytecode.getClass().getSimpleName()) {
@@ -72,12 +80,14 @@ public class Translater {
 		}
 		String lo = "r" + bytecode.leftOperand;
 		String ro = "r" + bytecode.rightOperand;
-		String target = "pc = " + (bytecode.target.replaceAll("[^0-9]", "")) + "; continue;";
-		body.add("if (" + lo + " " + op + " " + ro + ") { " + target + " }");
+		body.add("if (" + lo + " " + op + " " + ro + ") {");
+		body.add("pc = " + (bytecode.target.replaceAll("[^0-9]", "")) + ";");
+		body.add("continue;");
+		body.add("}");
 	}
 
 	private static void translate(Codes.Label bytecode) {
-		body.add("case " + ":"); //(bytecode.toString().replaceAll("[^0-9]", "")) +
+		body.add("case " + (bytecode.toString().replaceAll("[^0-9]", "")) + ":");
 	}
 
 	private static void translate(Codes.Goto bytecode) {
@@ -91,7 +101,30 @@ public class Translater {
 	}
 
 	private static void unknownCodeType(Code bytecode) {
+		body.add("something went wrong interpreting a " + bytecode.toString());
 		fail = true;
+	}
+
+	private static void addPreamble(WyilFile.FunctionOrMethod m) {
+		body.add("function " + m.name() + "(" + paramsString(m) + ") {");
+		body.add("while(true) {");
+		body.add("var pc = -1;");
+		body.add("switch (pc) {");
+		body.add("case -1:");
+	}
+
+	private static String paramsString(WyilFile.FunctionOrMethod m) {
+		String params = "";
+		if (m.type().params().size() > 0) {
+			params += "r0";
+			for (int i = 1; i < m.type().params().size(); i++) params += ", r" + i;
+		}
+		return params;
+	}
+
+	private static void addPostamble() {
+		for(int i = 0 ; i < 3 ; i++) body.add("}");
+		body.add(" ");
 	}
 
 }
