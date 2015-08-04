@@ -1,8 +1,18 @@
 package testing;
 
-import org.junit.Test;
+import org.junit.*;
 
 public class TestAll {
+
+    static long startTime;
+    static long endTime;
+
+    @BeforeClass public static  void recordStartTime() { startTime = System.currentTimeMillis(); }
+    @AfterClass public static void totalTime() {
+        endTime = System.currentTimeMillis();
+		System.out.println("------------------------------------------------------\n");
+        System.out.println("Total time to execute all tests: " + (endTime - startTime) + "ms");
+    }
 
 	@Test public void Access_Valid_1() throws Exception { TestFile.runTest("Access_Valid_1"); }
 	@Test public void Access_Valid_2() throws Exception { TestFile.runTest("Access_Valid_2"); }

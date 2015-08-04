@@ -1,8 +1,8 @@
 package wyjs;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -11,18 +11,18 @@ import wyil.lang.WyilFile;
 
 public class WyJS {
 
-	private static boolean writeFiles = false;
-	private static boolean asm = false;
+	private static boolean writeFiles = true;
 
-	static PrintWriter fileWriter;
+	private static PrintWriter fileWriter;
 
 	public static void main(String[] args) {
 		try {
+			for (String a : args) if (a.equals("noWrite")) writeFiles = false;
 //			First, check how many inputs and figure out what they mean
 			String wyilInputFolder = "", jsOutputFolder = "";
 			if (args.length > 1) {
-				jsOutputFolder = args[1];
-				if (args.length > 1) wyilInputFolder = args[2];
+				if (!args[1].equals("noWrite") && args[1].endsWith("/")) jsOutputFolder = args[1];
+				if (args.length > 2) wyilInputFolder = args[2];
 			}
 //			Second, read the WyIL file specified on the command-line
 			WyilFileReader r = new WyilFileReader(wyilInputFolder + args[0]);
@@ -31,33 +31,31 @@ public class WyJS {
 			String[] codeArray = translate(wyilFile);
 //			Fourth, print code to console and possibly files
 			print(codeArray, FilenameUtils.removeExtension(args[0]), jsOutputFolder);
-		} catch (IOException e) { System.out.println(e.getMessage()); }
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + "\n");
+//			if(throwException) throw e;
+		}
 	}
 
 	private static String[] translate(WyilFile wyilFile) {
-		String codeArray[] = null;
-		if (asm) codeArray = ASMTranslator.translateWyIL(wyilFile);
-		else
-			for (WyilFile.Block b : wyilFile.blocks())
-				if (b instanceof WyilFile.FunctionOrMethod)
-					codeArray = FunctionTranslater.translateWyil((WyilFile.FunctionOrMethod)b);
-		return codeArray;
+		ArrayList<String> codeArrayList = new ArrayList<>();
+		codeArrayList.addAll(ASMTranslator.translateWyIL(wyilFile));
+		String codeArray[] = new String[codeArrayList.size()];
+		return codeArrayList.toArray(codeArray);
 	}
 
 	private static void print(String[] codeArray, String fileName, String jsOutputFolder) {
-		System.out.println("Translating: " + fileName + ".wyil \n");
 		try {
-			fileWriter = new PrintWriter(jsOutputFolder + fileName + ".js");
+			if(writeFiles) fileWriter = new PrintWriter(jsOutputFolder + fileName + ".js");
 			output(formatCode(codeArray));
-			fileWriter.close();
+			if(writeFiles) fileWriter.close();
 		} catch (FileNotFoundException e) { e.printStackTrace(); }
-		System.out.println();
 	}
 
 	private static void output(String toprint[]) {
 		for (String line : toprint) {
 			System.out.println(line); // for display purposes only
-			if (writeFiles) fileWriter.println(line); // writes line to file
+			if(writeFiles) fileWriter.println(line); // writes line to file
 		}
 	}
 
@@ -65,16 +63,16 @@ public class WyJS {
 		int indent = 0;
 		for (int lineNo = 0 ; lineNo < codeArray.length ; lineNo++) {
 			String line = codeArray[lineNo];
-			if (line.substring(line.length() - 1).equals("}")) indent--;
+			if (line.endsWith("}")) indent--;
 			codeArray[lineNo] = indentLine(line, indent);
-			if (line.substring(line.length() - 1).equals("{")) indent++;
+			if (line.endsWith("{")) indent++;
 		}
 		return codeArray;
 	}
 
 	private static String indentLine(String line, int indent) {
 		String indentedLine = "";
-		for (int i = 0 ; i < indent ; i++) indentedLine += " ";
+		for (int i = 0 ; i < indent ; i++) indentedLine += "  ";
 		indentedLine += line;
 		return indentedLine;
 	}
