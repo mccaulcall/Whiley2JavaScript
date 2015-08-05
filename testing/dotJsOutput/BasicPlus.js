@@ -1,9 +1,7 @@
 function asmf(stdlib, foreign, heap) {
   "use asm";
    
-  var i32 = new stdlib.Int32Array(heap);
-  var imul = stdlib.Math.imul;
-  var truncate = foreign.truncate;
+  var int32 = new stdlib.Int32Array(heap);
    
   function f(r0, r1, r2) {
     while(true) {

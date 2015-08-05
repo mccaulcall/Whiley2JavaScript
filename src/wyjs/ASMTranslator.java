@@ -24,9 +24,7 @@ public class ASMTranslator {
 		line("function asmf(stdlib, foreign, heap) {");
 		line("\"use asm\";");
 		line();
-		line("var i32 = new stdlib.Int32Array(heap);");
-		line("var imul = stdlib.Math.imul;");
-		line("var truncate = foreign.truncate;");
+		line("var int32 = new stdlib.Int32Array(heap);");
 		line();
 	}
 

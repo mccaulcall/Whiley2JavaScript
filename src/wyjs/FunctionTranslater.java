@@ -49,16 +49,10 @@ public class FunctionTranslater {
 
 	private static void translate(Codes.BinaryOperator bytecode) {
 		String output = "var r" + bytecode.target() + " = r" + bytecode.operand(0);
-		switch(bytecode.opcode()) {
-			case 128: output += " + "; break;
-			case 129: output += " - "; break;
-			case 130: output += " * "; break;
-			case 131: output += " / "; break;
-			default: output += " ("+bytecode.opcode()+") "; break;
-		}
+		String op = getOp(bytecode.opcode());
 		String end = ";";
 		if (bytecode.assignedType().toString().equals("int")) end = " | 0;";
-		line(output + "r" + bytecode.operand(1) + end);
+		line(output + " " + op + " r" + bytecode.operand(1) + end);
 	}
 
 	private static void translate(Codes.Assign bytecode) {
@@ -72,19 +66,7 @@ public class FunctionTranslater {
 	}
 
 	private static void translate(Codes.If bytecode) {
-		String op = "";
-		switch(bytecode.opcode()) {
-			case 96: op = "=="; break; // ifeq
-			case 97: op = "!="; break; // ifne
-			case 98: op = "<"; break; // iflt
-			case 99: op = "<="; break; // ifle
-			case 100: op = ">"; break; // ifgt
-			case 101: op = ">="; break; // ifge
-//			case 102: op = ""; break; // ifel
-//			case 103: op = ""; break; // ifss
-//			case 104: op = ""; break; // ifse
-			default: op = " ("+bytecode.opcode()+") "; break;
-		}
+		String op = getOp(bytecode.opcode());
 		String lo = "r" + bytecode.leftOperand;
 		String ro = "r" + bytecode.rightOperand;
 		line("if (" + lo + " " + op + " " + ro + ") {");
@@ -110,6 +92,23 @@ public class FunctionTranslater {
 	private static void unknownCodeType(Code bytecode) {
 		line("issue interpreting a " + bytecode.toString() + ".");
 		fail = true;
+	}
+
+	private static String getOp(int opCode) {
+		switch(opCode) {
+			case Code.OPCODE_ifeq: return "==";
+			case Code.OPCODE_ifne: return "!=";
+			case Code.OPCODE_iflt: return "<";
+			case Code.OPCODE_ifle: return "<=";
+			case Code.OPCODE_ifgt: return ">";
+			case Code.OPCODE_ifge: return ">=";
+			case Code.OPCODE_add: return "+";
+			case Code.OPCODE_sub: return "-";
+			case Code.OPCODE_mul: return "*";
+			case Code.OPCODE_div: return "/";
+//			case Code.OPCODE_: return "";
+			default: return "(" + opCode + ")";
+		}
 	}
 
 	private static void addPreamble(WyilFile.FunctionOrMethod m) {
