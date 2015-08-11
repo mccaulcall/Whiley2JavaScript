@@ -1,14 +1,15 @@
-package wyjs;
+package testing;
 
 import java.io.IOException;
 
 import wyil.io.WyilFilePrinter;
 import wyil.io.WyilFileReader;
 import wyil.lang.WyilFile;
+import wyjs.WyJS;
 
 public class WyilReader {
 
-	private static String files[] = {"Access_Valid_1"};
+	private static String files[] = {"Assume_Valid_1"};
 
 	public static void main(String[] args) {
 		for (String fileName : files) {

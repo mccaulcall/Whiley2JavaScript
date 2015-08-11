@@ -37,28 +37,26 @@ public class FunctionTranslater {
 
 	private static void translate(Codes.Return bytecode) {
 		if(bytecode.operand != Codes.NULL_REG)
-			line("return r" + bytecode.operand + ";");
+			line("return " + bytecode.operand + "+sp;");
 		else line("return" + ";");
 	}
 
 	private static void translate(Codes.Const bytecode) {
-		String end = ";";
-		if (bytecode.assignedType().toString().equals("int")) end = " | 0;";
-		line("var r"  + bytecode.target() + " = " +  bytecode.constant + end);
+		line("int32["  + bytecode.target() + "+sp] = " +  bytecode.constant + ";");
 	}
 
 	private static void translate(Codes.BinaryOperator bytecode) {
-		String output = "var r" + bytecode.target() + " = r" + bytecode.operand(0);
+		String output = "int32[" + bytecode.target() + "+sp] = int32[" + bytecode.operand(0) + "+sp]";
 		String op = getOp(bytecode.opcode());
-		String end = ";";
-		if (bytecode.assignedType().toString().equals("int")) end = " | 0;";
-		line(output + " " + op + " r" + bytecode.operand(1) + end);
+		String end = "+sp];";
+		if (bytecode.assignedType().toString().equals("int")) end = "+sp] | 0;";
+		line(output + " " + op + " int32[" + bytecode.operand(1) + end);
 	}
 
 	private static void translate(Codes.Assign bytecode) {
-		String end = ";";
-		if (bytecode.assignedType().toString().equals("int")) end = " | 0;";
-		line("r" + bytecode.target() + " = r" + bytecode.operand(0) + end);
+		String end = "+sp];";
+		if (bytecode.assignedType().toString().equals("int")) end = "+sp] | 0;";
+		line("int32[" + bytecode.target() + "+sp] = int32[" + bytecode.operand(0) + end);
 	}
 
 	private static void translate(Codes.Assert bytecode) {
@@ -67,8 +65,8 @@ public class FunctionTranslater {
 
 	private static void translate(Codes.If bytecode) {
 		String op = getOp(bytecode.opcode());
-		String lo = "r" + bytecode.leftOperand;
-		String ro = "r" + bytecode.rightOperand;
+		String lo = "int32[" + bytecode.leftOperand + "+sp]";
+		String ro = "int32[" + bytecode.rightOperand + "+sp]";
 		line("if (" + lo + " " + op + " " + ro + ") {");
 		line("pc = " + (bytecode.target.replaceAll("[^0-9]", "")) + ";");
 		line("continue;");
@@ -106,6 +104,7 @@ public class FunctionTranslater {
 			case Code.OPCODE_sub: return "-";
 			case Code.OPCODE_mul: return "*";
 			case Code.OPCODE_div: return "/";
+			case Code.OPCODE_rem: return "%";
 //			case Code.OPCODE_: return "";
 			default: return "(" + opCode + ")";
 		}
@@ -113,6 +112,9 @@ public class FunctionTranslater {
 
 	private static void addPreamble(WyilFile.FunctionOrMethod m) {
 		line("function " + m.name() + "(" + paramsString(m) + ") {");
+		line("if (sp == null) {");
+		line("sp = 0;");
+		line("}");
 		line("while(true) {");
 		line("var pc = -1;");
 		line("switch (pc) {");
@@ -120,11 +122,11 @@ public class FunctionTranslater {
 	}
 
 	private static String paramsString(WyilFile.FunctionOrMethod m) {
-		String params = "";
-		if (m.type().params().size() > 0) {
-			params += "r0";
-			for (int i = 1; i < m.type().params().size(); i++) params += ", r" + i;
-		}
+		String params = "sp";
+//		if (m.type().params().size() > 0) {
+//			params += "r0";
+//			for (int i = 1; i < m.type().params().size(); i++) params += ", r" + i;
+//		}
 		return params;
 	}
 

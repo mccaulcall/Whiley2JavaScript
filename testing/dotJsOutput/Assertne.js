@@ -3,16 +3,19 @@ function asmf(stdlib, foreign, heap) {
    
   var int32 = new stdlib.Int32Array(heap);
    
-  function f(r0) {
+  function f(sp) {
+    if (sp == null) {
+      sp = 0;
+    }
     while(true) {
       var pc = -1;
       switch (pc) {
         case -1:
-        var r3 = 1 | 0;
-        var r4 = r0 + r3 | 0;
-        r2 = r4 | 0;
-        r1 = r2 | 0;
-        if (r0 != r1) {
+        int32[3+sp] = 1;
+        int32[4+sp] = int32[0+sp] + int32[3+sp] | 0;
+        int32[2+sp] = int32[4+sp] | 0;
+        int32[1+sp] = int32[2+sp] | 0;
+        if (int32[0+sp] != int32[1+sp]) {
           pc = 1;
           continue;
         }
