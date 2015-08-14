@@ -22,7 +22,7 @@ public class WyJS {
 			String wyilInputFolder = "", jsOutputFolder = "";
 			if (args.length > 1) {
 				if (!args[1].equals("noWrite") && args[1].endsWith("/")) jsOutputFolder = args[1];
-				if (args.length > 2) wyilInputFolder = args[2];
+				if (args.length > 2) if (args[2].endsWith("/")) wyilInputFolder = args[2];
 			}
 //			Second, read the WyIL file specified on the command-line
 			WyilFileReader r = new WyilFileReader(wyilInputFolder + args[0]);

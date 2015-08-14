@@ -2,7 +2,7 @@ package testing;
 
 import org.junit.*;
 
-public class TestSome {
+public class TestCustom {
 
     static long startTime;
     static long endTime;
@@ -20,5 +20,6 @@ public class TestSome {
 	@Test public void Assertne() throws Exception { TestFile.runTest("Assertne"); }
 	@Test public void Basic() throws Exception { TestFile.runTest("Basic"); }
 	@Test public void BasicPlus() throws Exception { TestFile.runTest("BasicPlus"); }
+	@Test public void FunctionCall() throws Exception { TestFile.runTest("FunctionCall"); }
 
 }

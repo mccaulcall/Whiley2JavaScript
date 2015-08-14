@@ -8,7 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 
 public class TestGenerator {
 
-	private static String[] testSelectedFiles = new String[0]; // = {"Basic", "BasicPlus", "Asserteq", "Assertne"}; //
+	private static String[] testSelectedFiles = new String[0]; // = {"Basic", "BasicPlus", "Asserteq", "Assertne", FunctionCall}; //
 
 	public static void main(String[] args) {
 		ArrayList<String> wyilNames = new ArrayList<String>();

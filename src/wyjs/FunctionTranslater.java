@@ -112,9 +112,9 @@ public class FunctionTranslater {
 
 	private static void addPreamble(WyilFile.FunctionOrMethod m) {
 		line("function " + m.name() + "(" + paramsString(m) + ") {");
-		line("if (sp == null) {");
-		line("sp = 0;");
-		line("}");
+//		line("if (sp == null) {");
+//		line("sp = 0;");
+//		line("}");
 		line("while(true) {");
 		line("var pc = -1;");
 		line("switch (pc) {");

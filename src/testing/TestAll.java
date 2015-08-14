@@ -143,6 +143,7 @@ public class TestAll {
     @Test public void Ensures_Valid_6() throws Exception { TestFile.runTest("Ensures_Valid_6"); }
     @Test public void Ensures_Valid_7() throws Exception { TestFile.runTest("Ensures_Valid_7"); }
     @Test public void Ensures_Valid_8() throws Exception { TestFile.runTest("Ensures_Valid_8"); }
+    @Test public void FunctionCall() throws Exception { TestFile.runTest("FunctionCall"); }
     @Test public void FunctionRef_Valid_1() throws Exception { TestFile.runTest("FunctionRef_Valid_1"); }
     @Test public void FunctionRef_Valid_3() throws Exception { TestFile.runTest("FunctionRef_Valid_3"); }
     @Test public void FunctionRef_Valid_4() throws Exception { TestFile.runTest("FunctionRef_Valid_4"); }
@@ -505,6 +506,7 @@ public class TestAll {
     @Test public void While_Valid_45() throws Exception { TestFile.runTest("While_Valid_45"); }
     @Test public void While_Valid_46() throws Exception { TestFile.runTest("While_Valid_46"); }
     @Test public void While_Valid_9() throws Exception { TestFile.runTest("While_Valid_9"); }
+
 
 /**/
 }

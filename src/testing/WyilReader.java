@@ -9,7 +9,7 @@ import wyjs.WyJS;
 
 public class WyilReader {
 
-	private static String files[] = {"Assume_Valid_1"};
+	private static String files[] = {"FunctionCall"};
 
 	public static void main(String[] args) {
 		for (String fileName : files) {
