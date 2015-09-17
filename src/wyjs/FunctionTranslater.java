@@ -9,10 +9,10 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 
 public class FunctionTranslater {
 
-	private static ArrayList<String> body;
-	private static boolean fail;
+	private ArrayList<String> body;
+	private boolean fail;
 
-	public static ArrayList<String> translateFunction(FunctionOrMethod m) {
+	public ArrayList<String> translateFunction(FunctionOrMethod m) {
 		body = new ArrayList<>(); fail = false;
 		addPreamble(m);
 		for (Code bytecode : m.body()) if (!fail) translate(bytecode);
@@ -20,7 +20,7 @@ public class FunctionTranslater {
 		return body;
 	}
 
-	private static void translate(Code bytecode) {
+	private void translate(Code bytecode) {
 		switch (bytecode.getClass().getSimpleName()) {
 		case "Return": translate((Codes.Return) bytecode); break;
 		case "Const": translate((Codes.Const) bytecode); break;
@@ -35,17 +35,17 @@ public class FunctionTranslater {
 		}
 	}
 
-	private static void translate(Codes.Return bytecode) {
+	private void translate(Codes.Return bytecode) {
 		if(bytecode.operand != Codes.NULL_REG)
 			line("return " + bytecode.operand + "+sp;");
 		else line("return" + ";");
 	}
 
-	private static void translate(Codes.Const bytecode) {
+	private void translate(Codes.Const bytecode) {
 		line("int32["  + bytecode.target() + "+sp] = " +  bytecode.constant + ";");
 	}
 
-	private static void translate(Codes.BinaryOperator bytecode) {
+	private void translate(Codes.BinaryOperator bytecode) {
 		String output = "int32[" + bytecode.target() + "+sp] = int32[" + bytecode.operand(0) + "+sp]";
 		String op = getOp(bytecode.opcode());
 		String end = "+sp];";
@@ -53,17 +53,17 @@ public class FunctionTranslater {
 		line(output + " " + op + " int32[" + bytecode.operand(1) + end);
 	}
 
-	private static void translate(Codes.Assign bytecode) {
+	private void translate(Codes.Assign bytecode) {
 		String end = "+sp];";
 		if (bytecode.assignedType().toString().equals("int")) end = "+sp] | 0;";
 		line("int32[" + bytecode.target() + "+sp] = int32[" + bytecode.operand(0) + end);
 	}
 
-	private static void translate(Codes.Assert bytecode) {
+	private void translate(Codes.Assert bytecode) {
 		for (Code code: bytecode) translate(code);
 	}
 
-	private static void translate(Codes.If bytecode) {
+	private void translate(Codes.If bytecode) {
 		String op = getOp(bytecode.opcode());
 		String lo = "int32[" + bytecode.leftOperand + "+sp]";
 		String ro = "int32[" + bytecode.rightOperand + "+sp]";
@@ -73,26 +73,26 @@ public class FunctionTranslater {
 		line("}");
 	}
 
-	private static void translate(Codes.Label bytecode) {
+	private void translate(Codes.Label bytecode) {
 		line("case " + (bytecode.toString().replaceAll("[^0-9]", "")) + ":");
 	}
 
-	private static void translate(Codes.Goto bytecode) {
+	private void translate(Codes.Goto bytecode) {
 		int label = Integer.parseInt(bytecode.target);//.replaceAll("[^0-9]", ""));
 		label = label + 10;
 		line("pc = " + label + "; continue;");
 	}
 
-	private static void translate(Codes.Fail bytecode) {
+	private void translate(Codes.Fail bytecode) {
 		line("throw \"" + bytecode.toString() + "\";");
 	}
 
-	private static void unknownCodeType(Code bytecode) {
+	private void unknownCodeType(Code bytecode) {
 		line("issue interpreting a " + bytecode.toString() + ".");
 		fail = true;
 	}
 
-	private static String getOp(int opCode) {
+	private String getOp(int opCode) {
 		switch(opCode) {
 			case Code.OPCODE_ifeq: return "==";
 			case Code.OPCODE_ifne: return "!=";
@@ -110,7 +110,7 @@ public class FunctionTranslater {
 		}
 	}
 
-	private static void addPreamble(WyilFile.FunctionOrMethod m) {
+	private void addPreamble(WyilFile.FunctionOrMethod m) {
 		line("function " + m.name() + "(" + paramsString(m) + ") {");
 //		line("if (sp == null) {");
 //		line("sp = 0;");
@@ -121,7 +121,7 @@ public class FunctionTranslater {
 		line("case -1:");
 	}
 
-	private static String paramsString(WyilFile.FunctionOrMethod m) {
+	private String paramsString(WyilFile.FunctionOrMethod m) {
 		String params = "sp";
 //		if (m.type().params().size() > 0) {
 //			params += "r0";
@@ -130,10 +130,10 @@ public class FunctionTranslater {
 		return params;
 	}
 
-	private static void addPostamble() {
+	private void addPostamble() {
 		for(int i = 0 ; i < 3 ; i++) line("}");
 	}
 
-	private static void line(String s) { body.add(s); }
+	private void line(String s) { body.add(s); }
 
 }

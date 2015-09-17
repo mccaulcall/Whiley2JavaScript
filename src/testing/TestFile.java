@@ -10,7 +10,9 @@ import wyjs.WyJS;
 
 public class TestFile {
 
-	public static long runTest(String fileName) throws Exception {
+	private WyJS wyJS = new WyJS();
+
+	public long runTest(String fileName) throws Exception {
 		System.out.println("------------------------------------------------------\n");
 		System.out.println("Translating: " + fileName + ".wyil");
 		System.out.println("\n------------------------------------------------------\n");
@@ -28,12 +30,12 @@ public class TestFile {
 		return validatedTime - startTime;
 	}
 
-	private static void generateJavaScript(String fileName) throws Exception {
+	private void generateJavaScript(String fileName) throws Exception {
 		String file[] = {fileName,"testing/dotJsOutput/","testing/validWyil/"};
-		WyJS.main(file);
+		wyJS.main(file);
 	}
 
-	private static void validateJavaScript(String fileName) throws Exception {
+	private void validateJavaScript(String fileName) throws Exception {
 	    try {
 		    Reader file = new FileReader(new File("testing/dotJsOutput/" + fileName));
 		    Context context = Context.enter();

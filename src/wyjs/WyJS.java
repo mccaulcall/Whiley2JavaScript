@@ -11,11 +11,12 @@ import wyil.lang.WyilFile;
 
 public class WyJS {
 
-	private static boolean writeFiles = true;
+	private boolean writeFiles = true;
 
-	private static PrintWriter fileWriter;
+	private PrintWriter fileWriter;
+	private ASMTranslator aSMTranslator = new ASMTranslator();
 
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		try {
 			for (String a : args) if (a.equals("noWrite")) writeFiles = false;
 //			First, check how many inputs and figure out what they mean
@@ -37,14 +38,14 @@ public class WyJS {
 		}
 	}
 
-	private static String[] translate(WyilFile wyilFile) {
+	private String[] translate(WyilFile wyilFile) {
 		ArrayList<String> codeArrayList = new ArrayList<>();
-		codeArrayList.addAll(ASMTranslator.translateWyIL(wyilFile));
+		codeArrayList.addAll(aSMTranslator.translateWyIL(wyilFile));
 		String codeArray[] = new String[codeArrayList.size()];
 		return codeArrayList.toArray(codeArray);
 	}
 
-	private static void print(String[] codeArray, String fileName, String jsOutputFolder) {
+	private void print(String[] codeArray, String fileName, String jsOutputFolder) {
 		try {
 			if(writeFiles) fileWriter = new PrintWriter(jsOutputFolder + fileName + ".js");
 			output(formatCode(codeArray));
@@ -52,14 +53,14 @@ public class WyJS {
 		} catch (FileNotFoundException e) { e.printStackTrace(); }
 	}
 
-	private static void output(String toprint[]) {
+	private void output(String toprint[]) {
 		for (String line : toprint) {
 			System.out.println(line); // for display purposes only
 			if(writeFiles) fileWriter.println(line); // writes line to file
 		}
 	}
 
-	private static String[] formatCode(String[] codeArray) {
+	private String[] formatCode(String[] codeArray) {
 		int indent = 0;
 		for (int lineNo = 0 ; lineNo < codeArray.length ; lineNo++) {
 			String line = codeArray[lineNo];
@@ -70,7 +71,7 @@ public class WyJS {
 		return codeArray;
 	}
 
-	private static String indentLine(String line, int indent) {
+	private String indentLine(String line, int indent) {
 		String indentedLine = "";
 		for (int i = 0 ; i < indent ; i++) indentedLine += "  ";
 		indentedLine += line;

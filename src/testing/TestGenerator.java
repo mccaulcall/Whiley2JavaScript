@@ -21,7 +21,7 @@ public class TestGenerator {
 		}
 		Collections.sort(wyilNames);
 		for (String fileName : wyilNames)
-			System.out.println("@Test public void " + fileName + "() throws Exception { TestFile.runTest(\"" + fileName + "\"); }");
+			System.out.println("@Test public void " + fileName + "() throws Exception { fileTester.runTest(\"" + fileName + "\"); }");
 		//System.out.println("\n\n" + "Files Found: " + wyils.length);
 	}
 

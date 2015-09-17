@@ -6,21 +6,22 @@ import wyil.lang.WyilFile;
 
 public class ASMTranslator {
 
-	private static ArrayList<String> body;
+	private ArrayList<String> body;
+	private FunctionTranslater functionTranslater = new FunctionTranslater();
 
-	public static ArrayList<String> translateWyIL(WyilFile wyilFile) {
+	public ArrayList<String> translateWyIL(WyilFile wyilFile) {
 		body = new ArrayList<>();
 		addPreamble();
 		for (WyilFile.Block b : wyilFile.blocks()) {
 			if (b instanceof WyilFile.FunctionOrMethod)
-				body.addAll(FunctionTranslater.translateFunction((WyilFile.FunctionOrMethod)b));
+				body.addAll(functionTranslater.translateFunction((WyilFile.FunctionOrMethod)b));
 			line();
 		}
 		addPostamble();
 		return body;
 	}
 
-	private static void addPreamble() {
+	private void addPreamble() {
 		line("function asmf(stdlib, foreign, heap) {");
 		line("\"use asm\";");
 		line();
@@ -28,12 +29,12 @@ public class ASMTranslator {
 		line();
 	}
 
-	private static void addPostamble() {
+	private void addPostamble() {
 		line("}");
 		line();
 	}
 
-	private static void line(String s) { body.add(s); }
-	private static void line() { body.add(" "); }
+	private void line(String s) { body.add(s); }
+	private void line() { body.add(" "); }
 
 }

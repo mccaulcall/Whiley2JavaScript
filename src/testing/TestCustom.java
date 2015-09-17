@@ -4,10 +4,11 @@ import org.junit.*;
 
 public class TestCustom {
 
-    static long startTime;
-    static long endTime;
+	private TestFile fileTester = new TestFile();
+    private static long startTime;
+    private static long endTime;
 
-    @BeforeClass public static  void recordStartTime() { startTime = System.currentTimeMillis(); }
+    @BeforeClass public static void recordStartTime() { startTime = System.currentTimeMillis(); }
     @AfterClass public static void totalTime() {
         endTime = System.currentTimeMillis();
 		System.out.println("------------------------------------------------------\n");
@@ -16,10 +17,10 @@ public class TestCustom {
 
 //	@Test public void noWyilFile() throws Exception { TestFile.runTest(""); }
 
-	@Test public void Asserteq() throws Exception { TestFile.runTest("Asserteq"); }
-	@Test public void Assertne() throws Exception { TestFile.runTest("Assertne"); }
-	@Test public void Basic() throws Exception { TestFile.runTest("Basic"); }
-	@Test public void BasicPlus() throws Exception { TestFile.runTest("BasicPlus"); }
-	@Test public void FunctionCall() throws Exception { TestFile.runTest("FunctionCall"); }
+	@Test public void Asserteq() throws Exception { fileTester.runTest("Asserteq"); }
+	@Test public void Assertne() throws Exception { fileTester.runTest("Assertne"); }
+	@Test public void Basic() throws Exception { fileTester.runTest("Basic"); }
+	@Test public void BasicPlus() throws Exception { fileTester.runTest("BasicPlus"); }
+	@Test public void FunctionCall() throws Exception { fileTester.runTest("FunctionCall"); }
 
 }

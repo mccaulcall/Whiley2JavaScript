@@ -4,9 +4,6 @@ function asmf(stdlib, foreign, heap) {
   var int32 = new stdlib.Int32Array(heap);
    
   function f(sp) {
-    if (sp == null) {
-      sp = 0;
-    }
     while(true) {
       var pc = -1;
       switch (pc) {

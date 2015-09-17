@@ -9,9 +9,10 @@ import wyjs.WyJS;
 
 public class WyilReader {
 
-	private static String files[] = {"FunctionCall"};
+	private String files[] = {"FunctionCall"};
+	private WyJS wyJS = new WyJS();
 
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		for (String fileName : files) {
 			fileName = "testing/validWyil/"+fileName+".wyil";
 			try {
@@ -22,7 +23,7 @@ public class WyilReader {
 			} catch (IOException e) { System.out.println(e.getMessage()); }
 			System.out.println("\n");
 			String file[] = {fileName,"noWrite"};
-			WyJS.main(file);
+			wyJS.main(file);
 		}
 	}
 
